@@ -1,4 +1,11 @@
-select u.email, u.full_name, MAX(cu.created_at), MAX(cu.updated_at), c.title, ROUND(SUM(cup.progress_duration),0), AVG(cup.progress_percentage)
+select 
+u.email as email, 
+u.full_name as name, 
+MAX(cu.created_at) as enroll_date, 
+MAX(cu.updated_at) as last_update, 
+c.title as title, 
+ROUND(SUM(cup.progress_duration),0) as duration, 
+AVG(cup.progress_percentage) as progress
 from course_users cu
 left join courses c on cu.course_serial = c.serial 
 left join users u on cu.user_serial = u.serial 
