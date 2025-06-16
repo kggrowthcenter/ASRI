@@ -141,8 +141,3 @@ if st.session_state.get('authentication_status'):
     # Unduh data
     csv = filtered_df.to_csv(index=False).encode('utf-8')
     st.download_button("📥 Unduh Data CSV", data=csv, file_name="data_pendaftar_asri.csv", mime='text/csv')
-
-elif authentication_status is False:
-    st.error("Username atau password salah.")
-elif authentication_status is None:
-    st.warning("Silakan login terlebih dahulu.")
