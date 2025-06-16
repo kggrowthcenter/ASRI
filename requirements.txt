@@ -13,3 +13,4 @@ matplotlib
 seaborn
 pymysql
 XlsxWriter
+sshtunnel
