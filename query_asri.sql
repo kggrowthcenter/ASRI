@@ -1,14 +1,16 @@
 select 
-u.email as email, 
-u.full_name as name, 
-MAX(cu.created_at) as enroll_date, 
-MAX(cu.updated_at) as last_update, 
-c.title as title, 
-ROUND(SUM(cup.progress_duration),0) as duration, 
-AVG(cup.progress_percentage) as progress
-from course_users cu
-left join courses c on cu.course_serial = c.serial 
-left join users u on cu.user_serial = u.serial 
-left join partner_groups pg on cu.partner_group_serial = pg.serial
-left join course_user_progress cup on cup.course_serial = c.serial and cup.user_serial = u.serial
-group by u.email, u.full_name, c.title 
+cp.created_at as tanggal_daftar,
+cp.first_name as nama_pendaftar, 
+cp.email as email,
+cp.`role` as role_pendaftar, 
+cp.school_name, 
+cp.school_address, 
+cp.school_city, 
+cp.school_district, 
+cp.school_subdistrict, 
+cp.school_province,
+cpm.`role` as role_terdaftar, 
+cpm.grade, 
+cpm.full_name as nama_terdaftar
+from competition_participants cp 
+left join competition_participant_members cpm on cpm.competition_participant_serial = cp.serial
