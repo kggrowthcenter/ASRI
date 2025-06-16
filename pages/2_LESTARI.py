@@ -1,16 +1,19 @@
 import streamlit as st
+st.set_page_config(page_title="Lestari Academy Dashboard", layout="wide")
 import pandas as pd
 import numpy as np
-from fetch_data import fetch_data_id
+from fetch_data import fetch_data_lestari
 
-df = fetch_data_id()
+df = fetch_data_lestari()
+
+st.title("🎓 Lestari Academy Dashboard")
+tab1 = st.tabs(["📊 Progress User"])
+
 # Pastikan kolom 'duration' dan 'progress' ada
 if 'duration' in df.columns and 'progress' in df.columns:
     # Ubah durasi dari detik ke jam
     df['duration_jam'] = df['duration'] / 3600
 
-    # Judul halaman
-    st.title("📊 Progress User")
     st.markdown("Halaman ini menampilkan **progress pembelajaran** pengguna serta durasi belajar mereka dalam **jam**.")
 
     # Statistik ringkas
