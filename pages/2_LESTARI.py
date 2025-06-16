@@ -19,7 +19,7 @@ _, df_lestari, _ = finalize_data()
 
 # Title
 st.title("🌱 Lestari Academy Dashboard")
-st.write("📚 Dashboard ini menampilkan data aktivitas pengguna selama pembelajaran.")
+st.write("📚 Dashboard ini menampilkan data aktivitas user selama pembelajaran.")
 st.divider()
 
 # Validasi kolom wajib
@@ -37,12 +37,12 @@ if all(col in df_lestari.columns for col in ['duration', 'progress', 'email']):
     # ============================
     # Top Title dan Top Category
     # ============================
-    st.subheader("🏆 Aktivitas Terpopuler")
+    st.subheader("🏆 Aktivitas User")
 
     col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown("**📘 Top Title (by Unique Users)**")
+        st.markdown("**📘 Top Title**")
         if 'title' in df_lestari.columns:
             top_title = (
                 df_lestari.groupby('title')['email']
@@ -56,7 +56,7 @@ if all(col in df_lestari.columns for col in ['duration', 'progress', 'email']):
             st.warning("Kolom `title` tidak ditemukan.")
 
     with col2:
-        st.markdown("**🗂️ Top Category (by Unique Users)**")
+        st.markdown("**🗂️ Top Category**")
         if 'category' in df_lestari.columns:
             top_category = (
                 df_lestari.groupby('category')['email']
