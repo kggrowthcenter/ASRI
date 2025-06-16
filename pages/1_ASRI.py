@@ -14,7 +14,7 @@ make_sidebar()
 
 
 # Fetch data
-df_creds, df_asri = finalize_data()
+df_asri, df_lestari, df_creds = finalize_data()
 
 # Format datetime
 if 'tanggal_daftar' in df_asri.columns:
