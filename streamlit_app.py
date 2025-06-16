@@ -1,13 +1,11 @@
 import streamlit as st
-from time import sleep
-from navigation import make_sidebar
 import streamlit_authenticator as stauth
+from time import sleep
 from data_processing import finalize_data
-import gspread
-from datetime import datetime, timedelta
-from oauth2client.service_account import ServiceAccountCredentials
+from navigation import make_sidebar
+from datetime import datetime
 
-st.set_page_config(page_title="Asri Dashboard", page_icon="🍀", layout="centered")
+st.set_page_config(page_title="Asri Dashboard", page_icon="🍀", layout="centered", initial_sidebar_state="collapsed")
 
 # Load data
 df_asri, df_lestari, df_creds = finalize_data()
@@ -40,18 +38,18 @@ authenticator = stauth.Authenticate(
     credentials["cookie"]["expiry_days"],
     auto_hash=False,
 )
-# Make the sidebar visible only if logged in
-if st.session_state.get("logged_in", False):
-    make_sidebar()
 
-# ===== LOGIN =====
+# Login interface
 st.title("🍀 Dashboard Asri Login")
 authenticator.login('main')
 
-# ===== LOGIN STATUS =====
+# Auth status
 if st.session_state.get('authentication_status'):
-    st.session_state['logged_in'] = True  # Set session state for logged in
-    st.success("Logged in successfully")
+    if not st.session_state.get('logged_in', False):
+        st.session_state['logged_in'] = True
+        st.success("Logged in successfully")
+        sleep(0.5)
+        st.rerun()
 elif st.session_state.get('authentication_status') is False:
     st.error("Incorrect username or password.")
 elif st.session_state.get('authentication_status') is None:
