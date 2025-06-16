@@ -9,3 +9,4 @@ paramiko
 datetime
 toml
 numpy
+streamlit_authenticator
