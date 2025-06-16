@@ -1,51 +1,33 @@
-from navigation import make_sidebar
 import streamlit as st
 import pandas as pd
 import numpy as np
 from data_processing import finalize_data
+from navigation import make_sidebar, make_filter
 import altair as alt
-import io
-
 
 st.set_page_config(page_title="Akademi Sekolah Lestari (ASRI) Dashboard", layout="wide")
 
+if not st.session_state.get("logged_in", False):
+    st.warning("Silakan login terlebih dahulu.")
+    st.stop()
 
 make_sidebar()
 
-
 # Fetch data
-df_asri, df_lestari, df_creds = finalize_data()
+df_asri, _, _ = finalize_data()
 
-# Format datetime
 if 'tanggal_daftar' in df_asri.columns:
     df_asri['tanggal_daftar'] = pd.to_datetime(df_asri['tanggal_daftar'])
 
 # Title
 st.title("🎓 Akademi Sekolah Lestari (ASRI) Dashboard")
-st.write("📋 data registrasi untuk monitoring data pendaftar ASRI.")
+st.write("📋 Data registrasi untuk monitoring data pendaftar ASRI.")
 st.divider()
 
-# Sidebar Filters
+# Filter Sidebar
 st.sidebar.header("🔍 Filter Data")
-selected_province = st.sidebar.selectbox("Provinsi", options=["Semua"] + sorted(df_asri['school_province'].dropna().unique().tolist()))
-selected_role = st.sidebar.selectbox("Role Pendaftar", options=["Semua"] + sorted(df_asri['role_pendaftar'].dropna().unique().tolist()))
-selected_date_range = st.sidebar.date_input("Rentang Tanggal Daftar", [])
-
-# Filter logic
-filtered_df = df_asri.copy()
-
-if selected_province != "Semua":
-    filtered_df = filtered_df[filtered_df['school_province'] == selected_province]
-
-if selected_role != "Semua":
-    filtered_df = filtered_df[filtered_df['role_pendaftar'] == selected_role]
-
-if len(selected_date_range) == 2:
-    start_date, end_date = pd.to_datetime(selected_date_range)
-    filtered_df = filtered_df[
-        (filtered_df['tanggal_daftar'] >= start_date) & 
-        (filtered_df['tanggal_daftar'] <= end_date)
-    ]
+columns_list = ['school_name', 'school_city', 'school_province', 'role_pendaftar', 'role_terdaftar']
+filtered_df, selected_filters = make_filter(columns_list, df_asri)
 
 # Metrics
 col1, col2, col3 = st.columns(3)
@@ -83,7 +65,7 @@ with col2:
     ).properties(height=300, title='Grade Peserta')
     st.altair_chart(grade_chart, use_container_width=True)
 
-# Distribusi Provinsi dan Kota sebagai Dataframe
+# Distribusi Wilayah
 st.subheader("🗺️ Tabel Distribusi Wilayah")
 col1, col2 = st.columns(2)
 
