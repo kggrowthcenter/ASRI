@@ -23,7 +23,7 @@ st.write("📚 Dashboard ini menampilkan data aktivitas pengguna selama pembelaj
 st.divider()
 
 # Validasi kolom wajib
-if 'duration' in df_lestari.columns and 'progress' in df_lestari.columns and 'email' in df_lestari.columns:
+if all(col in df_lestari.columns for col in ['duration', 'progress', 'email']):
     df_lestari['duration_jam'] = df_lestari['duration'] / 3600  # Ubah detik ke jam
 
     # Ringkasan metrik
@@ -34,27 +34,40 @@ if 'duration' in df_lestari.columns and 'progress' in df_lestari.columns and 'em
 
     st.divider()
 
-    # Top Durasi Belajar
-    st.subheader("🏆 Top Durasi Belajar")
-    top_durasi = df_lestari[['email', 'duration_jam']].copy()
-    top_durasi = top_durasi.groupby('email').sum().reset_index().sort_values(by='duration_jam', ascending=False).head(10)
-    top_durasi['duration_jam'] = top_durasi['duration_jam'].round(2)
-    st.dataframe(top_durasi, use_container_width=True)
-
-    # Top Progress Belajar
-    st.subheader("📊 Top Progress Belajar")
-    top_progress = df_lestari[['email', 'progress']].copy()
-    top_progress = top_progress.groupby('email').mean().reset_index().sort_values(by='progress', ascending=False).head(10)
-    top_progress['progress'] = top_progress['progress'].round(2)
+    # ============================
+    # Top Title dan Top Category
+    # ============================
+    st.subheader("🏆 Aktivitas Terpopuler")
 
     col1, col2 = st.columns(2)
+
     with col1:
-        st.write("📧 Email")
-        st.dataframe(top_progress[['email']])
+        st.markdown("**📘 Top Title (by Unique Users)**")
+        if 'title' in df_lestari.columns:
+            top_title = (
+                df_lestari.groupby('title')['email']
+                .nunique()
+                .reset_index(name='Jumlah Pengguna')
+                .sort_values(by='Jumlah Pengguna', ascending=False)
+                .head(10)
+            )
+            st.dataframe(top_title, use_container_width=True)
+        else:
+            st.warning("Kolom `title` tidak ditemukan.")
 
     with col2:
-        st.write("📈 Progress (%)")
-        st.dataframe(top_progress[['progress']])
+        st.markdown("**🗂️ Top Category (by Unique Users)**")
+        if 'category' in df_lestari.columns:
+            top_category = (
+                df_lestari.groupby('category')['email']
+                .nunique()
+                .reset_index(name='Jumlah Pengguna')
+                .sort_values(by='Jumlah Pengguna', ascending=False)
+                .head(10)
+            )
+            st.dataframe(top_category, use_container_width=True)
+        else:
+            st.warning("Kolom `category` tidak ditemukan.")
 
     st.divider()
 
@@ -68,4 +81,3 @@ if 'duration' in df_lestari.columns and 'progress' in df_lestari.columns and 'em
 
 else:
     st.error("Data tidak memiliki kolom 'duration', 'progress', atau 'email'. Harap periksa sumber data.")
-
