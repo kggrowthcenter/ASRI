@@ -4,54 +4,14 @@ import numpy as np
 from fetch_data import fetch_data_asri, fetch_creds
 import altair as alt
 from datetime import datetime
-import os
-from oauth2client.service_account import ServiceAccountCredentials
 import gspread
-import textwrap
-import streamlit_authenticator as stauth
+
 
 st.set_page_config(page_title="Akademi Sekolah Lestari (ASRI) Dashboard", layout="wide")
 
 # Fetch data
 df = fetch_data_asri()
 df_creds = fetch_creds()
-
-# Extract credentials
-def extract_credentials(df_creds):
-    credentials = {
-        "credentials": {
-            "usernames": {}
-        },
-        "cookie": {
-            "name": "growth_center",
-            "key": "growth_2024",
-            "expiry_days": 30
-        }
-    }
-    for index, row in df_creds.iterrows():
-        credentials['credentials']['usernames'][row['username']] = {
-            'name': row['username'],
-            'password': row['password'],
-            'email': row['email'],
-        }
-    return credentials
-
-credentials = extract_credentials(df_creds)
-
-# Authentication Setup
-authenticator = stauth.Authenticate(
-    credentials['credentials'],
-    credentials['cookie']['name'],
-    credentials['cookie']['key'],
-    credentials['cookie']['expiry_days'],
-    auto_hash=False
-)
-
-authenticator.login('main')
-
-if st.session_state.get('authentication_status'):
-    st.session_state['logged_in'] = True  # Set session state for logged in
-    st.success("Logged in successfully!")
 
     # Format datetime
     if 'tanggal_daftar' in df.columns:
