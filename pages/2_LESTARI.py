@@ -15,7 +15,7 @@ make_sidebar()
 
 
 # Fetch data
-df_creds, df_lestari = finalize_data()
+df_asri, df_lestari, df_creds = finalize_data()
 
 st.title("🎓 Lestari Academy Dashboard")
 tab1 = st.tabs(["📊 Progress User"])
