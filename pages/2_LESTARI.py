@@ -8,9 +8,7 @@ import io
 
 
 st.set_page_config(page_title="Lestari Academy Dashboard", layout="wide")
-if not st.session_state.get("logged_in", False):
-    st.warning("You must log in first.")
-    st.stop()
+
 
 make_sidebar()
 
