@@ -1,13 +1,21 @@
+from navigation import make_sidebar
 import streamlit as st
 import pandas as pd
 import numpy as np
 from data_processing import finalize_data
 import altair as alt
 import io
-from navigation import make_sidebar
+
 
 st.set_page_config(page_title="Lestari Academy Dashboard", layout="wide")
+if not st.session_state.get("logged_in", False):
+    st.warning("You must log in first.")
+    st.stop()
+
 make_sidebar()
+
+
+
 # Fetch data
 df_creds, df_lestari = finalize_data()
 
