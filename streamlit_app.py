@@ -40,7 +40,7 @@ authenticator = stauth.Authenticate(
 )
 
 # Login interface
-st.title("🍀 Dashboard Asri Login")
+st.title("🍀 Dashboard Asri")
 authenticator.login('main')
 
 # Auth status
