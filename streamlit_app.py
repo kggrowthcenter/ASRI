@@ -5,8 +5,15 @@ from data_processing import finalize_data
 from navigation import make_sidebar
 from datetime import datetime
 
-st.set_page_config(page_title="Lestari Academy Dashboard", page_icon="🍀", layout="centered", initial_sidebar_state="collapsed")
-# Sembunyikan sidebar, termasuk tombol toggle panahnya
+# Set page
+st.set_page_config(
+    page_title="Lestari Academy Dashboard",
+    page_icon="🍀",
+    layout="centered",
+    initial_sidebar_state="collapsed"
+)
+
+# CSS: Hide sidebar & toggle button total
 hide_sidebar_complete = """
     <style>
         [data-testid="stSidebar"] { display: none !important; }
@@ -14,7 +21,6 @@ hide_sidebar_complete = """
         [data-testid="collapsedControl"] { display: none !important; }
     </style>
 """
-st.markdown(hide_sidebar_complete, unsafe_allow_html=True)
 
 # Load data
 df_asri, df_lestari, df_creds = finalize_data()
@@ -47,24 +53,22 @@ authenticator = stauth.Authenticate(
     credentials["cookie"]["expiry_days"],
     auto_hash=False,
 )
-# Make the sidebar visible only if logged in
-if st.session_state.get("logged_in", False):
-    make_sidebar()
 
+# LOGIN UI
 st.title("🍀 Dashboard Asri")
-authenticator.login('main')
+authenticator.login('main')  # ⬅️ Lokasi 'main' aman (utama)
 
-
-# Login logic & sidebar control
+# Authentication control
 if st.session_state.get("authentication_status"):
-    if not st.session_state.get('logged_in', False):
-        st.session_state['logged_in'] = True
+    if not st.session_state.get("logged_in", False):
+        st.session_state["logged_in"] = True
         st.success("Logged in successfully")
-    make_sidebar()
+    
+    make_sidebar()  # ✅ HANYA render sidebar di sini saat login berhasil
+
 else:
-    st.markdown(hide_sidebar_complete, unsafe_allow_html=True)
+    st.markdown(hide_sidebar_complete, unsafe_allow_html=True)  # Hide sidebar total
     if st.session_state.get("authentication_status") is False:
         st.error("Incorrect username or password.")
     elif st.session_state.get("authentication_status") is None:
         st.warning("Please enter your username and password to log in.")
-
