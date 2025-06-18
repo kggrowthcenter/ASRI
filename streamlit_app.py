@@ -45,7 +45,7 @@ authenticator.login('main')
 # ... [your existing code above] ...
 
 st.title("🍀 Dashboard Asri")
-authenticator.login('login', clear_on_submit=True)
+authenticator.login('login_form')
 
 
 # Hide default sidebar nav before login
