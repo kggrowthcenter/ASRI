@@ -1,26 +1,29 @@
 import streamlit as st
 from time import sleep
 import pandas as pd
-import os
 
-# Call this at the top of each page to build sidebar
+# Build sidebar hanya jika user sudah login
 def make_sidebar():
-    with st.sidebar:
-        st.page_link("pages/1_asri.py", label="🎓 Registration")
-        st.page_link("pages/2_lestari.py", label="📚 Lestari Dashboard")
-        if st.button("🚪 Log out", key="logout_button"):
-            st.session_state.authentication_status = None
-            st.session_state.username = None
-            st.rerun()
+    if st.session_state.get("authentication_status"):  # ⛔ Pastikan sudah login
+        with st.sidebar:
+            st.page_link("pages/1_asri.py", label="🎓 Registration")
+            st.page_link("pages/2_lestari.py", label="📚 Lestari Dashboard")
+            if st.button("🚪 Log out", key="logout_button"):
+                st.session_state.authentication_status = None
+                st.session_state.username = None
+                st.session_state.logged_in = False
+                st.rerun()
 
-# Call this to log out and return to home
+# Fungsi logout terpisah (kalau butuh redirect khusus)
 def logout():
+    st.session_state.authentication_status = None
+    st.session_state.username = None
     st.session_state.logged_in = False
     st.success("Logged out")
     sleep(0.5)
     st.switch_page("streamlit_app.py")
 
-# Optional: simple dynamic filter builder
+# Fungsi filter builder opsional
 def make_filter(columns_list, df_asri):
     filter_columns = st.multiselect(
         'Filter the data (optional):',
