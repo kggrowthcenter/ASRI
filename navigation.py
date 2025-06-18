@@ -6,8 +6,8 @@ import pandas as pd
 def make_sidebar():
     if st.session_state.get("authentication_status"):  # ⛔ Pastikan sudah login
         with st.sidebar:
-            st.page_link("pages/1_ASRI.py", label="🎓 Registration")
-            st.page_link("pages/2_LESTARI.py", label="📚 Progress")
+            st.page_link("screens/1_ASRI.py", label="🎓 Registration")
+            st.page_link("screens/2_LESTARI.py", label="📚 Progress")
             if st.button("🚪 Log out", key="logout_button"):
                 st.session_state.authentication_status = None
                 st.session_state.username = None
