@@ -25,7 +25,6 @@ st.write("📋 Data registrasi untuk monitoring data pendaftar ASRI.")
 st.divider()
 
 # Filter Sidebar
-st.write("🔍 Filter Data")
 columns_list = ['school_name', 'school_city', 'school_province', 'role_pendaftar', 'role_terdaftar']
 filtered_df, selected_filters = make_filter(columns_list, df_asri)
 
