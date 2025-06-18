@@ -1,39 +1,32 @@
-# navigation.py
 import streamlit as st
 from time import sleep
-from streamlit.runtime.scriptrunner import get_script_run_ctx
-from streamlit.source_util import get_pages
 import pandas as pd
+import os
 
-def get_current_page_name():
-    ctx = get_script_run_ctx()
-    if ctx is None:
-        raise RuntimeError("Couldn't get script context")
-
-    pages = get_pages("")
-    return pages[ctx.page_script_hash]["page_name"]
-
+# Call this at the top of each page to build sidebar
 def make_sidebar():
     with st.sidebar:
         st.title("Navigasi")
 
         if st.session_state.get("logged_in", False):
-            st.page_link("pages/1_ASRI.py", label="🎓 ASRI")
-            st.page_link("pages/2_LESTARI.py", label="🌎 Lestari")
+            st.page_link("pages/1_asri.py", label="🎓 Registration")
+            st.page_link("pages/2_lestari.py", label="🌎 Progress")
             st.divider()
 
             if st.button("🚪 Log out", key="logout_button"):
                 logout()
 
-        elif get_current_page_name() != "streamlit_app":
-            st.switch_page("streamlit_app.py")
+        else:
+            st.info("Please log in from the homepage.")
 
+# Call this to log out and return to home
 def logout():
     st.session_state.logged_in = False
     st.success("Logged out")
     sleep(0.5)
     st.switch_page("streamlit_app.py")
 
+# Optional: simple dynamic filter builder
 def make_filter(columns_list, df_asri):
     filter_columns = st.multiselect(
         'Filter the data (optional):',
@@ -41,6 +34,7 @@ def make_filter(columns_list, df_asri):
         format_func=lambda x: x.capitalize(),
         key="filter_columns_selector"
     )
+
     filtered_data = df_asri.copy()
     selected_filters = []
 
