@@ -40,10 +40,9 @@ authenticator = stauth.Authenticate(
 )
 
 st.title("🍀 Dashboard Asri")
-authenticator.login('login_form')
+authenticator.login('main')
 
-
-# Hide default sidebar nav before login
+# Hide nav sebelum login
 if not st.session_state.get("authentication_status"):
     st.markdown("""
         <style>
@@ -52,13 +51,12 @@ if not st.session_state.get("authentication_status"):
         </style>
     """, unsafe_allow_html=True)
 
-# Login status
-if st.session_state.get('authentication_status'):
-    st.session_state['logged_in'] = True
-    st.success("Logged in successfully")
-    make_sidebar()  # ✅ only show your sidebar after login
-elif st.session_state.get('authentication_status') is False:
+# Login state
+if st.session_state.get("authentication_status"):
+    st.success("Logged in!")
+    make_sidebar()
+elif st.session_state["authentication_status"] is False:
     st.error("Incorrect username or password.")
-elif st.session_state.get('authentication_status') is None:
-    st.warning("Please enter your username and password to log in.")
+else:
+    st.info("Masukkan kredensial untuk login.")
 
