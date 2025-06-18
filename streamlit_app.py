@@ -1,15 +1,33 @@
 import streamlit as st
 import streamlit_authenticator as stauth
+from time import sleep
 from data_processing import finalize_data
-from navigation import render_sidebar
+from navigation import make_sidebar
 from datetime import datetime
 
 st.set_page_config(
     page_title="Lestari Academy Dashboard",
     page_icon="🍀",
-    layout="wide",
-    initial_sidebar_state="expanded"
+    layout="centered",
+    initial_sidebar_state="collapsed"
 )
+
+# 🔥 Hapus seluruh sidebar (saat login screen) & title bawaan sidebar
+hide_sidebar_total = """
+    <style>
+        [data-testid="stSidebar"] { display: none !important; }
+        [data-testid="collapsedControl"] { display: none !important; }
+    </style>
+"""
+# 🔥 Hapus judul "streamlit app", "ASRI", "LESTARI" di sidebar
+hide_sidebar_nav_title = """
+    <style>
+        [data-testid="stSidebarNav"] > div:first-child {
+            display: none !important;
+        }
+    </style>
+"""
+st.markdown(hide_sidebar_nav_title, unsafe_allow_html=True)
 
 # Load data
 df_asri, df_lestari, df_creds = finalize_data()
@@ -43,27 +61,23 @@ authenticator = stauth.Authenticate(
     auto_hash=False,
 )
 
-# Login UI
+# ⛔ Jangan tampilkan sidebar kalau belum login
+if not st.session_state.get("authentication_status"):
+    st.markdown(hide_sidebar_total, unsafe_allow_html=True)
+
+# Halaman utama
+st.title("🍀 Dashboard Asri")
 authenticator.login('main')
 
-# Setelah login berhasil
+# ✅ Jika sudah login, tampilkan sidebar custom
 if st.session_state.get("authentication_status"):
-    if "logged_in" not in st.session_state:
-        st.session_state["logged_in"] = True
+    if not st.session_state.get('logged_in', False):
+        st.session_state['logged_in'] = True
         st.success("Logged in successfully")
-        st.session_state["page"] = "registration"
+    make_sidebar()
 
-    render_sidebar()  # Sidebar navigasi
-
-    # Routing manual
-    if st.session_state["page"] == "registration":
-        from screens import asri
-        asri.show(df_asri)
-    elif st.session_state["page"] == "progress":
-        from screens import lestari
-        lestari.show(df_lestari)
-else:
-    if st.session_state.get("authentication_status") is False:
-        st.error("Incorrect username or password.")
-    elif st.session_state.get("authentication_status") is None:
-        st.warning("Please enter your username and password.")
+# 🔴 Feedback salah login
+elif st.session_state.get("authentication_status") is False:
+    st.error("Incorrect username or password.")
+elif st.session_state.get("authentication_status") is None:
+    st.warning("Please enter your username and password to log in.")
