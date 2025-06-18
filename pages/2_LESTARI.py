@@ -7,12 +7,8 @@ from navigation import make_sidebar
 
 st.set_page_config(page_title="Lestari Academy Dashboard", layout="wide")
 
-# Cek login
-if not st.session_state.get("logged_in", False):
-    st.warning("Silakan login terlebih dahulu.")
-    st.stop()
-
-make_sidebar()
+if st.session_state.get("authentication_status"):
+    make_sidebar()
 
 # Fetch data
 _, df_lestari, _ = finalize_data()
