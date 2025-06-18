@@ -76,7 +76,7 @@ if st.session_state.get("authentication_status"):
         st.rerun()  # force redirect to first page
     else:
         make_sidebar()
-        st.switch_page("pages/1_Registration.py")  # redirect ke halaman utama
+        st.switch_page("screens/1_ASRI.py")  # redirect ke halaman utama
 
 else:
     if st.session_state.get("authentication_status") is False:
