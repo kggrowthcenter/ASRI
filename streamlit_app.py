@@ -57,6 +57,14 @@ authenticator = stauth.Authenticate(
 # LOGIN UI
 st.title("🍀 Dashboard Asri")
 authenticator.login('main')  # ⬅️ Lokasi 'main' aman (utama)
+hide_nav_titles = """
+    <style>
+        [data-testid="stSidebarNav"] > div:first-child {
+            display: none;
+        }
+    </style>
+"""
+st.markdown(hide_nav_titles, unsafe_allow_html=True)
 
 # Authentication control
 if st.session_state.get("authentication_status"):
