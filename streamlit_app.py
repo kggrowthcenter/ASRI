@@ -71,13 +71,15 @@ authenticator.login('main')
 
 # ✅ Jika sudah login, tampilkan sidebar custom
 if st.session_state.get("authentication_status"):
-    if not st.session_state.get('logged_in', False):
-        st.session_state['logged_in'] = True
-        st.success("Logged in successfully")
-    make_sidebar()
+    if not st.session_state.get("logged_in"):
+        st.session_state["logged_in"] = True
+        st.rerun()  # force redirect to first page
+    else:
+        make_sidebar()
+        st.switch_page("pages/1_Registration.py")  # redirect ke halaman utama
 
-# 🔴 Feedback salah login
-elif st.session_state.get("authentication_status") is False:
-    st.error("Incorrect username or password.")
-elif st.session_state.get("authentication_status") is None:
-    st.warning("Please enter your username and password to log in.")
+else:
+    if st.session_state.get("authentication_status") is False:
+        st.error("Incorrect username or password.")
+    elif st.session_state.get("authentication_status") is None:
+        st.warning("Please enter your username and password to log in.")
