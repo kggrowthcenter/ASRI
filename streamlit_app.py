@@ -5,7 +5,7 @@ from data_processing import finalize_data
 from navigation import make_sidebar
 from datetime import datetime
 
-st.set_page_config(page_title="Asri Dashboard", page_icon="🍀", layout="centered", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="Lestari Academy Dashboard", page_icon="🍀", layout="centered", initial_sidebar_state="collapsed")
 
 # Load data
 df_asri, df_lestari, df_creds = finalize_data()
@@ -42,15 +42,27 @@ authenticator = stauth.Authenticate(
 # Login interface
 st.title("🍀 Dashboard Asri")
 authenticator.login('main')
+# ... [your existing code above] ...
 
-# Auth status
+st.title("🍀 Dashboard Asri")
+authenticator.login('main')
+
+# Hide default sidebar nav before login
+if not st.session_state.get("authentication_status"):
+    st.markdown("""
+        <style>
+        section[data-testid="stSidebarNav"] { display: none; }
+        header { visibility: hidden; }
+        </style>
+    """, unsafe_allow_html=True)
+
+# Login status
 if st.session_state.get('authentication_status'):
-    if not st.session_state.get('logged_in', False):
-        st.session_state['logged_in'] = True
-        st.success("Logged in successfully")
-        sleep(0.5)
-        st.rerun()
+    st.session_state['logged_in'] = True
+    st.success("Logged in successfully")
+    make_sidebar()  # ✅ only show your sidebar after login
 elif st.session_state.get('authentication_status') is False:
     st.error("Incorrect username or password.")
 elif st.session_state.get('authentication_status') is None:
     st.warning("Please enter your username and password to log in.")
+
