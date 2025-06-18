@@ -5,7 +5,6 @@ from data_processing import finalize_data
 from navigation import make_sidebar
 from datetime import datetime
 
-# Set page
 st.set_page_config(
     page_title="Lestari Academy Dashboard",
     page_icon="🍀",
@@ -13,14 +12,22 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# CSS: Hide sidebar & toggle button total
-hide_sidebar_complete = """
+# 🔥 Hapus seluruh sidebar (saat login screen) & title bawaan sidebar
+hide_sidebar_total = """
     <style>
         [data-testid="stSidebar"] { display: none !important; }
-        [data-testid="stSidebarNav"] { display: none !important; }
         [data-testid="collapsedControl"] { display: none !important; }
     </style>
 """
+# 🔥 Hapus judul "streamlit app", "ASRI", "LESTARI" di sidebar
+hide_sidebar_nav_title = """
+    <style>
+        [data-testid="stSidebarNav"] > div:first-child {
+            display: none !important;
+        }
+    </style>
+"""
+st.markdown(hide_sidebar_nav_title, unsafe_allow_html=True)
 
 # Load data
 df_asri, df_lestari, df_creds = finalize_data()
@@ -54,29 +61,23 @@ authenticator = stauth.Authenticate(
     auto_hash=False,
 )
 
-# LOGIN UI
+# ⛔ Jangan tampilkan sidebar kalau belum login
+if not st.session_state.get("authentication_status"):
+    st.markdown(hide_sidebar_total, unsafe_allow_html=True)
+
+# Halaman utama
 st.title("🍀 Dashboard Asri")
-authenticator.login('main')  # ⬅️ Lokasi 'main' aman (utama)
-hide_nav_titles = """
-    <style>
-        [data-testid="stSidebarNav"] > div:first-child {
-            display: none;
-        }
-    </style>
-"""
-st.markdown(hide_nav_titles, unsafe_allow_html=True)
+authenticator.login('main')
 
-# Authentication control
+# ✅ Jika sudah login, tampilkan sidebar custom
 if st.session_state.get("authentication_status"):
-    if not st.session_state.get("logged_in", False):
-        st.session_state["logged_in"] = True
+    if not st.session_state.get('logged_in', False):
+        st.session_state['logged_in'] = True
         st.success("Logged in successfully")
-    
-    make_sidebar()  # ✅ HANYA render sidebar di sini saat login berhasil
+    make_sidebar()
 
-else:
-    st.markdown(hide_sidebar_complete, unsafe_allow_html=True)  # Hide sidebar total
-    if st.session_state.get("authentication_status") is False:
-        st.error("Incorrect username or password.")
-    elif st.session_state.get("authentication_status") is None:
-        st.warning("Please enter your username and password to log in.")
+# 🔴 Feedback salah login
+elif st.session_state.get("authentication_status") is False:
+    st.error("Incorrect username or password.")
+elif st.session_state.get("authentication_status") is None:
+    st.warning("Please enter your username and password to log in.")
