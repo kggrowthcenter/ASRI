@@ -38,18 +38,17 @@ authenticator = stauth.Authenticate(
     credentials["cookie"]["expiry_days"],
     auto_hash=False,
 )
+if not st.session_state.get("authentication_status"):
+    st.markdown("""
+        <style>
+        section[data-testid="stSidebarNav"] { display: none !important; }
+        section[data-testid="stSidebar"] > div:first-child { display: none !important; }
+        </style>
+    """, unsafe_allow_html=True)
 
 st.title("🍀 Dashboard Asri")
 authenticator.login('main')
 
-# Hide nav sebelum login
-if not st.session_state.get("authentication_status"):
-    st.markdown("""
-        <style>
-        section[data-testid="stSidebarNav"] { display: none; }
-        header { visibility: hidden; }
-        </style>
-    """, unsafe_allow_html=True)
 
 # Login state
 if st.session_state.get("authentication_status"):
