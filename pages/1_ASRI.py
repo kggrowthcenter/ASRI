@@ -7,11 +7,8 @@ import altair as alt
 
 st.set_page_config(page_title="Akademi Sekolah Lestari (ASRI) Dashboard", layout="wide")
 
-if not st.session_state.get("logged_in", False):
-    st.warning("Silakan login terlebih dahulu.")
-    st.stop()
-
-make_sidebar()
+if st.session_state.get("authentication_status"):
+    make_sidebar()
 
 # Fetch data
 df_asri, _, _ = finalize_data()
