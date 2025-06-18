@@ -6,14 +6,15 @@ from navigation import make_sidebar
 from datetime import datetime
 
 st.set_page_config(page_title="Lestari Academy Dashboard", page_icon="🍀", layout="centered", initial_sidebar_state="collapsed")
-hide_sidebar_style = """
+# Sembunyikan sidebar, termasuk tombol toggle panahnya
+hide_sidebar_complete = """
     <style>
-        section[data-testid="stSidebarNav"] {
-            display: none;
-        }
+        [data-testid="stSidebar"] { display: none !important; }
+        [data-testid="stSidebarNav"] { display: none !important; }
+        [data-testid="collapsedControl"] { display: none !important; }
     </style>
 """
-st.markdown(hide_sidebar_style, unsafe_allow_html=True)
+st.markdown(hide_sidebar_complete, unsafe_allow_html=True)
 
 # Load data
 df_asri, df_lestari, df_creds = finalize_data()
