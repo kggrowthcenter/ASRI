@@ -55,12 +55,16 @@ st.title("🍀 Dashboard Asri")
 authenticator.login('main')
 
 
-# Handle authentication status
-if st.session_state.get('authentication_status'):
-    st.session_state['logged_in'] = True  # Set session state for logged in
-    st.success("Logged in successfully. Go to the Dashboard in the sidebar.")
-elif st.session_state.get('authentication_status') is False:
-    st.error("Incorrect username or password.")
-elif st.session_state.get('authentication_status') is None:
-    st.warning("Please enter your username and password to log in.")
+# Login logic & sidebar control
+if st.session_state.get("authentication_status"):
+    if not st.session_state.get('logged_in', False):
+        st.session_state['logged_in'] = True
+        st.success("Logged in successfully")
+    make_sidebar()
+else:
+    st.markdown(hide_sidebar_complete, unsafe_allow_html=True)
+    if st.session_state.get("authentication_status") is False:
+        st.error("Incorrect username or password.")
+    elif st.session_state.get("authentication_status") is None:
+        st.warning("Please enter your username and password to log in.")
 
