@@ -38,24 +38,20 @@ authenticator = stauth.Authenticate(
     credentials["cookie"]["expiry_days"],
     auto_hash=False,
 )
-if not st.session_state.get("authentication_status"):
-    st.markdown("""
-        <style>
-        section[data-testid="stSidebarNav"] { display: none !important; }
-        section[data-testid="stSidebar"] > div:first-child { display: none !important; }
-        </style>
-    """, unsafe_allow_html=True)
+# Make the sidebar visible only if logged in
+if st.session_state.get("logged_in", False):
+    make_sidebar()
 
 st.title("🍀 Dashboard Asri")
 authenticator.login('main')
 
 
-# Login state
-if st.session_state.get("authentication_status"):
-    st.success("Logged in!")
-    make_sidebar()
-elif st.session_state["authentication_status"] is False:
+# Handle authentication status
+if st.session_state.get('authentication_status'):
+    st.session_state['logged_in'] = True  # Set session state for logged in
+    st.success("Logged in successfully. Go to the Dashboard in the sidebar.")
+elif st.session_state.get('authentication_status') is False:
     st.error("Incorrect username or password.")
-else:
-    st.info("Masukkan kredensial untuk login.")
+elif st.session_state.get('authentication_status') is None:
+    st.warning("Please enter your username and password to log in.")
 
