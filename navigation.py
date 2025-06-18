@@ -9,8 +9,8 @@ def make_sidebar():
         st.title("Navigasi")
 
         if st.session_state.get("logged_in", False):
-            st.page_link("pages/1_asri.py", label="🎓 Registration")
-            st.page_link("pages/2_lestari.py", label="🌎 Progress")
+            st.page_link("pages/1_ASRI.py", label="🎓 Registration")
+            st.page_link("pages/2_LESTARI.py", label="🌎 Progress")
             st.divider()
 
             if st.button("🚪 Log out", key="logout_button"):
