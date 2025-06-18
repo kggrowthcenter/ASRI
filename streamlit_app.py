@@ -39,11 +39,6 @@ authenticator = stauth.Authenticate(
     auto_hash=False,
 )
 
-# Login interface
-st.title("🍀 Dashboard Asri")
-authenticator.login('main')
-# ... [your existing code above] ...
-
 st.title("🍀 Dashboard Asri")
 authenticator.login('login_form')
 
