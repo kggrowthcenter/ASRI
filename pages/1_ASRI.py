@@ -66,18 +66,21 @@ st.subheader("🗺️ Tabel Distribusi Wilayah")
 col1, col2, col3 = st.columns(3)
 
 with col1:
+    st.write("Provinsi Sekolah")
     prov_counts = filtered_df['school_province'].value_counts().reset_index()
     prov_counts.columns = ['Provinsi', 'Jumlah']
     st.dataframe(prov_counts)
 
 with col2:
+    st.write("Kota Sekolah")
     city_counts = filtered_df['school_city'].value_counts().reset_index()
     city_counts.columns = ['Kota', 'Jumlah']
     st.dataframe(city_counts)
 with col3 :
+    st.write("Nama Sekolah")
     school_counts = filtered_df['school_name'].value_counts().reset_index()
     school_counts.columns = ['Sekolah', 'Jumlah']
-    st.dataframe(city_counts)
+    st.dataframe(school_counts)
 
 # Expandable Data Table
 with st.expander("📄 Lihat Data Pendaftar"):
