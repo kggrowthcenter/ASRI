@@ -26,10 +26,10 @@ columns_list = ['school_name', 'school_city', 'school_province', 'role_pendaftar
 filtered_df, selected_filters = make_filter(columns_list, df_asri)
 
 # Metrics
-col1, col2, col3 = st.columns(3)
-col1.metric("👤 Jumlah Pendaftar", filtered_df['email'].nunique())
-col2.metric("🏫 Jumlah Sekolah", filtered_df['school_name'].nunique())
-col3.metric("👥 Jumlah Peserta", filtered_df['nama_terdaftar'].nunique())
+#col1, col2, col3 = st.columns(3)
+#col1.metric("👤 Jumlah Pendaftar", filtered_df['email'].nunique())
+#col2.metric("🏫 Jumlah Sekolah", filtered_df['school_name'].nunique())
+#col3.metric("👥 Jumlah Peserta", filtered_df['nama_terdaftar'].nunique())
 
 # Chart 1: Pendaftar per Hari
 st.subheader("📈 Jumlah Pendaftar per Hari")
@@ -63,7 +63,7 @@ with col2:
 
 # Distribusi Wilayah
 st.subheader("🗺️ Tabel Distribusi Wilayah")
-col1, col2 = st.columns(2)
+col1, col2, col3 = st.columns(3)
 
 with col1:
     prov_counts = filtered_df['school_province'].value_counts().reset_index()
@@ -73,6 +73,10 @@ with col1:
 with col2:
     city_counts = filtered_df['school_city'].value_counts().reset_index()
     city_counts.columns = ['Kota', 'Jumlah']
+    st.dataframe(city_counts)
+with col3 :
+    school_counts = filtered_df['school_name'].value_counts().reset_index()
+    school_counts.columns = ['Sekolah', 'Jumlah']
     st.dataframe(city_counts)
 
 # Expandable Data Table
