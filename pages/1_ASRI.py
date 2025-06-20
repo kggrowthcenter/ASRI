@@ -67,7 +67,7 @@ with col2:
     grade_chart = alt.Chart(grade_counts).mark_bar().encode(
         x='Jumlah:Q',
         y=alt.Y('Grade:N', sort='-x')
-    ).properties(height=300, title='Grade Peserta (unik nama)')
+    ).properties(height=300, title='Grade Peserta')
     st.altair_chart(grade_chart, use_container_width=True)
 
 
