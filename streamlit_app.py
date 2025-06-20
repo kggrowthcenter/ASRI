@@ -73,8 +73,7 @@ authenticator.login('main')
 if st.session_state.get("authentication_status"):
     if not st.session_state.get('logged_in', False):
         st.session_state['logged_in'] = True
-        st.success("Logged in successfully")
-    make_sidebar()
+        st.success("Logged in successfully. Go to the sidebar.")
 
 # 🔴 Feedback salah login
 elif st.session_state.get("authentication_status") is False:
