@@ -65,27 +65,32 @@ with col2:
 st.subheader("🗺️ Tabel Distribusi Wilayah")
 col1, col2, col3 = st.columns(3)
 
+# --- Col1: Provinsi Sekolah, hitung jumlah sekolah ---
 with col1:
     st.write("Provinsi Sekolah")
-    prov_counts = filtered_df['school_province'].value_counts().reset_index()
-    prov_counts.columns = ['Provinsi', 'Jumlah']
+    prov_counts = filtered_df.groupby('school_province')['school_name'].nunique().reset_index()
+    prov_counts.columns = ['Provinsi', 'Jumlah Sekolah']
     st.dataframe(prov_counts, height=220)
 
+# --- Col2: Kota Sekolah, hitung jumlah sekolah ---
 with col2:
     st.write("Kota Sekolah")
-    city_counts = filtered_df['school_city'].value_counts().reset_index()
-    city_counts.columns = ['Kota', 'Jumlah']
+    city_counts = filtered_df.groupby('school_city')['school_name'].nunique().reset_index()
+    city_counts.columns = ['Kota', 'Jumlah Sekolah']
     st.dataframe(city_counts, height=220)
 
-with col3 :
+# --- Col3: Sekolah, jumlah nama terdaftar (student saja) ---
+with col3:
     st.write("Nama Sekolah")
-    school_counts = filtered_df['school_name'].value_counts().reset_index()
-    school_counts.columns = ['Sekolah', 'Jumlah']
+    students_df = filtered_df[filtered_df['role'] == 'student']
+    school_counts = students_df.groupby('school_name')['name'].nunique().reset_index()
+    school_counts.columns = ['Sekolah', 'Nama Terdaftar']
     st.dataframe(school_counts, height=220)
 
 # Expandable Data Table
 with st.expander("📄 Lihat Data Pendaftar"):
     st.dataframe(filtered_df)
+
 
 # Unduh data
 csv = filtered_df.to_csv(index=False).encode('utf-8')
