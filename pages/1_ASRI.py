@@ -43,6 +43,7 @@ if not filtered_df.empty:
 else:
     st.info("Tidak ada data untuk filter yang dipilih.")
 
+
 # Chart 2: Horizontal Bar Chart - Role dan Grade
 st.subheader("📊 Distribusi Role & Grade")
 col1, col2 = st.columns(2)
