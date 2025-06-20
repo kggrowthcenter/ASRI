@@ -82,7 +82,7 @@ with col2:
 # --- Col3: Sekolah, jumlah nama terdaftar (student saja) ---
 with col3:
     st.write("Nama Sekolah")
-    students_df = filtered_df[filtered_df['role'] == 'student']
+    students_df = filtered_df[filtered_df['role_terdaftar'] == 'student']
     school_counts = students_df.groupby('school_name')['nama_terdaftar'].nunique().reset_index()
     school_counts.columns = ['Sekolah', 'Nama Terdaftar']
     st.dataframe(school_counts, height=220)
