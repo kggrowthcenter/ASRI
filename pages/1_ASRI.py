@@ -83,7 +83,7 @@ with col2:
 with col3:
     st.write("Nama Sekolah")
     students_df = filtered_df[filtered_df['role'] == 'student']
-    school_counts = students_df.groupby('school_name')['name'].nunique().reset_index()
+    school_counts = students_df.groupby('school_name')['nama_terdaftar'].nunique().reset_index()
     school_counts.columns = ['Sekolah', 'Nama Terdaftar']
     st.dataframe(school_counts, height=220)
 
