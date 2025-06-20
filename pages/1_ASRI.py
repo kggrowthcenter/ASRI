@@ -62,7 +62,7 @@ with col2:
         .groupby('grade')['nama_terdaftar']
         .nunique()
         .reset_index()
-        .rename(columns={'name': 'Jumlah', 'grade': 'Grade'})
+        .rename(columns={'name_terdaftar': 'Jumlah', 'grade': 'Grade'})
     )
     grade_chart = alt.Chart(grade_counts).mark_bar().encode(
         x='Jumlah:Q',
