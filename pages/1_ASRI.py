@@ -44,22 +44,32 @@ st.subheader("📊 Distribusi Role & Grade")
 col1, col2 = st.columns(2)
 
 with col1:
-    role_counts = filtered_df['role_pendaftar'].value_counts().reset_index()
-    role_counts.columns = ['Role', 'Jumlah']
+    role_counts = (
+        filtered_df.groupby('role_pendaftar')['email']
+        .nunique()
+        .reset_index()
+        .rename(columns={'email': 'Jumlah', 'role_pendaftar': 'Role'})
+    )
     role_chart = alt.Chart(role_counts).mark_bar().encode(
         x='Jumlah:Q',
         y=alt.Y('Role:N', sort='-x')
-    ).properties(height=300, title='Role Pendaftar')
+    ).properties(height=300, title='Role Pendaftar (unik email)')
     st.altair_chart(role_chart, use_container_width=True)
 
 with col2:
-    grade_counts = filtered_df['grade'].dropna().value_counts().reset_index()
-    grade_counts.columns = ['Grade', 'Jumlah']
+    grade_counts = (
+        filtered_df.dropna(subset=['grade'])
+        .groupby('grade')['nama_terdaftar']
+        .nunique()
+        .reset_index()
+        .rename(columns={'name': 'Jumlah', 'grade': 'Grade'})
+    )
     grade_chart = alt.Chart(grade_counts).mark_bar().encode(
         x='Jumlah:Q',
         y=alt.Y('Grade:N', sort='-x')
-    ).properties(height=300, title='Grade Peserta')
+    ).properties(height=300, title='Grade Peserta (unik nama)')
     st.altair_chart(grade_chart, use_container_width=True)
+
 
 # Distribusi Wilayah
 st.subheader("🗺️ Tabel Distribusi Wilayah")
