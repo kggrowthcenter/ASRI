@@ -62,8 +62,11 @@ authenticator = stauth.Authenticate(
 )
 
 # ⛔ Jangan tampilkan sidebar kalau belum login
-if not st.session_state.get("authentication_status"):
-    st.markdown(hide_sidebar_total, unsafe_allow_html=True)
+#if not st.session_state.get("authentication_status"):
+    #st.markdown(hide_sidebar_total, unsafe_allow_html=True)
+
+if st.session_state.get("logged_in", False):
+    make_sidebar()
 
 # Halaman utama
 st.title("🍀 Dashboard Asri")
