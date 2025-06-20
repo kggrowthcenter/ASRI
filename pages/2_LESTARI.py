@@ -28,7 +28,7 @@ if all(col in df_lestari.columns for col in ['duration', 'progress', 'email']):
     #col2.metric("📈 Rata-rata Progress", f"{df_lestari['progress'].mean():.2f}%")
     #col3.metric("⏱️ Total Durasi Belajar", f"{df_lestari['duration_jam'].sum():.2f} jam")
 
-    st.divider()
+    #st.divider()
 
     # ============================
     # Top Title dan Top Category
