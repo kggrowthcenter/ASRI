@@ -34,7 +34,11 @@ filtered_df, selected_filters = make_filter(columns_list, df_asri)
 # Chart 1: Pendaftar per Hari
 st.subheader("📈 Jumlah Pendaftar per Hari")
 if not filtered_df.empty:
-    df_daily = filtered_df.groupby(filtered_df['tanggal_daftar'].dt.date).size().reset_index(name='jumlah_pendaftar')
+    df_daily = (
+        filtered_df.groupby(filtered_df['tanggal_daftar'].dt.date)['email']
+        .nunique()
+        .reset_index(name='jumlah_pendaftar')
+    )
     st.line_chart(df_daily.set_index('tanggal_daftar'))
 else:
     st.info("Tidak ada data untuk filter yang dipilih.")
