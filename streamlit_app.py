@@ -74,7 +74,8 @@ st.title("🍀 Dashboard Asri")
 authenticator.login('main')
 
 # ✅ Jika sudah login, tampilkan sidebar custom
-if st.session_state.get('login_success_message', False):
+if st.session_state.get('authentication_status'):
+    st.session_state['logged_in'] = True  # Set session state for logged in
     st.success("✅ **Logged in successfully! Go to the sidebar on the left!**")
 
     st.markdown(
