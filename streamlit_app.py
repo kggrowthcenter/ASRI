@@ -74,14 +74,23 @@ st.title("🍀 Dashboard Asri")
 authenticator.login('main')
 
 # ✅ Jika sudah login, tampilkan sidebar custom
-if st.session_state.get("authentication_status"):
-    if not st.session_state.get('logged_in', False):
-        st.session_state['logged_in'] = True
-        st.session_state['login_success_message'] = True 
-
-# Tampilkan pesan sukses jika sudah login
 if st.session_state.get('login_success_message', False):
-    st.success("Logged in successfully. Go to the sidebar."))
+    with st.container():
+        st.success("✅ **Logged in successfully. Go to the sidebar on the left!**")
+
+    st.markdown("""
+        <style>
+        .element-container:has(div[data-testid="stSuccess"]) {
+            animation: blink 1.5s infinite;
+        }
+        @keyframes blink {
+            0% {opacity: 1;}
+            50% {opacity: 0.5;}
+            100% {opacity: 1;}
+        }
+        </style>
+    """, unsafe_allow_html=True)
+
 
 # 🔴 Feedback salah login
 elif st.session_state.get("authentication_status") is False:
