@@ -7,12 +7,12 @@ import altair as alt
 
 st.set_page_config(page_title="Akademi Sekolah Lestari (ASRI) Dashboard", layout="wide")
 # Cek login status
+
+if st.session_state.get("authentication_status"):
+    make_sidebar()
 if not st.session_state.get("authentication_status"):
     st.error("⛔ You must log in to access this page.")
     st.stop()
-if st.session_state.get("authentication_status"):
-    make_sidebar()
-
 # Fetch data
 df_asri, _, _ = finalize_data()
 
