@@ -4,6 +4,7 @@ from time import sleep
 from data_processing import finalize_data
 from navigation import make_sidebar
 from datetime import datetime
+from oauth2client.service_account import ServiceAccountCredentials
 
 st.set_page_config(
     page_title="Lestari Academy Dashboard",
@@ -76,7 +77,11 @@ authenticator.login('main')
 if st.session_state.get("authentication_status"):
     if not st.session_state.get('logged_in', False):
         st.session_state['logged_in'] = True
-        st.success("Logged in successfully. Go to the sidebar.")
+        st.session_state['login_success_message'] = True 
+
+# Tampilkan pesan sukses jika sudah login
+if st.session_state.get('login_success_message', False):
+    st.success("Logged in successfully. Go to the sidebar."))
 
 # 🔴 Feedback salah login
 elif st.session_state.get("authentication_status") is False:
