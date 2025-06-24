@@ -1,8 +1,8 @@
+from navigation import make_sidebar, make_filter
 import streamlit as st
 import pandas as pd
 import numpy as np
 from data_processing import finalize_data
-from navigation import make_sidebar, make_filter
 import altair as alt
 
 st.set_page_config(page_title="Akademi Sekolah Lestari (ASRI) Dashboard", layout="wide")
