@@ -74,20 +74,10 @@ st.title("🍀 Dashboard Asri")
 authenticator.login('main')
 
 # ✅ Jika sudah login, tampilkan sidebar custom
-if st.session_state.get('authentication_status'):
-    st.session_state['logged_in'] = True  # Set session state for logged in
-    st.success("✅ **Logged in successfully! Go to the sidebar on the left!**")
-
-    st.markdown(
-        """
-        <div style="text-align: center;">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWFmYTFua3huM21lZmx5dWR2dXEwOHFwMHFzbTNja3N6emlqYzBoYiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Z9UdKXe7bD8i4/giphy.gif" 
-                 alt="Run to Sidebar" width="300">
-            <p style="font-size: 18px; color: green;"><strong>👉 Ayo ke sidebar sekarang!</strong></p>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+if st.session_state.get("authentication_status"):
+    if not st.session_state.get('logged_in', False):
+        st.session_state['logged_in'] = True
+        st.switch_page("pages/1_ASRI.py") 
 
 
 
