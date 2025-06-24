@@ -81,11 +81,13 @@ if st.session_state.get('login_success_message', False):
         st.markdown(
             """
             <div style="text-align: center;">
-                <img src="https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif" width="250">
+                <img src="https://media.giphy.com/media/Z9UdKXe7bD8i4/giphy.gif" width="300">
+                <p style="font-size: 18px; color: green;"><strong>👉 Ayo ke sidebar sekarang!</strong></p>
             </div>
             """,
             unsafe_allow_html=True
         )
+
 
 
 
