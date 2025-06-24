@@ -4,25 +4,27 @@ import pandas as pd
 
 # Build sidebar hanya jika user sudah login
 def make_sidebar():
-    if st.session_state.get("authentication_status"):  # ⛔ Pastikan sudah login
-        with st.sidebar:
+    with st.sidebar:
+        st.title("Sidebar")
+        st.write("")
+        st.write("")
+
+        if st.session_state.get("logged_in", False):
             st.page_link("pages/1_ASRI.py", label="🎓 Registration")
             st.page_link("pages/2_LESTARI.py", label="📚 Progress")
-            if st.button("🚪 Log out", key="logout_button"):
-                st.session_state.authentication_status = None
-                st.session_state.username = None
-                st.session_state.logged_in = False
-                st.rerun()
 
-# Fungsi logout terpisah (kalau butuh redirect khusus)
+            st.write("")
+            st.write("")
+
+            if st.button("Log out"):
+                logout()
+
 def logout():
-    st.session_state.authentication_status = None
-    st.session_state.username = None
     st.session_state.logged_in = False
-    st.success("Logged out")
+    st.info("Logged out successfully!")
     sleep(0.5)
     st.switch_page("streamlit_app.py")
-
+    
 # Fungsi filter builder opsional
 def make_filter(columns_list, df_asri):
     filter_columns = st.multiselect(
