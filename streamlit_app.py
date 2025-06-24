@@ -77,19 +77,16 @@ authenticator.login('main')
 if st.session_state.get('login_success_message', False):
     with st.container():
         st.success("✅ **Logged in successfully. Go to the sidebar on the left!**")
+        st.balloons()
+        st.markdown(
+            """
+            <div style="text-align: center;">
+                <img src="https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif" width="250">
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
-    st.markdown("""
-        <style>
-        .element-container:has(div[data-testid="stSuccess"]) {
-            animation: blink 1.5s infinite;
-        }
-        @keyframes blink {
-            0% {opacity: 1;}
-            50% {opacity: 0.5;}
-            100% {opacity: 1;}
-        }
-        </style>
-    """, unsafe_allow_html=True)
 
 
 # 🔴 Feedback salah login
