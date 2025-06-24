@@ -14,21 +14,21 @@ st.set_page_config(
 )
 
 # 🔥 Hapus seluruh sidebar (saat login screen) & title bawaan sidebar
-hide_sidebar_total = """
-    <style>
-        [data-testid="stSidebar"] { display: none !important; }
-        [data-testid="collapsedControl"] { display: none !important; }
-    </style>
-"""
+#hide_sidebar_total = """
+    #<style>
+        #[data-testid="stSidebar"] { display: none !important; }
+        #[data-testid="collapsedControl"] { display: none !important; }
+    #</style>
+#"""
 # 🔥 Hapus judul "streamlit app", "ASRI", "LESTARI" di sidebar
-hide_sidebar_nav_title = """
-    <style>
-        [data-testid="stSidebarNav"] > div:first-child {
-            display: none !important;
-        }
-    </style>
-"""
-st.markdown(hide_sidebar_nav_title, unsafe_allow_html=True)
+#hide_sidebar_nav_title = """
+    #<style>
+        #[data-testid="stSidebarNav"] > div:first-child {
+            #display: none !important;
+        #}
+    #</style>
+#"""
+#st.markdown(hide_sidebar_nav_title, unsafe_allow_html=True)
 
 # Load data
 df_asri, df_lestari, df_creds = finalize_data()
@@ -75,18 +75,19 @@ authenticator.login('main')
 
 # ✅ Jika sudah login, tampilkan sidebar custom
 if st.session_state.get('login_success_message', False):
-    with st.container():
-        st.success("✅ **Logged in successfully. Go to the sidebar on the left!**")
-        st.balloons()
-        st.markdown(
-            """
-            <div style="text-align: center;">
-                <img src="https://media.giphy.com/media/Z9UdKXe7bD8i4/giphy.gif" width="300">
-                <p style="font-size: 18px; color: green;"><strong>👉 Ayo ke sidebar sekarang!</strong></p>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+    st.success("✅ **Logged in successfully! Go to the sidebar on the left!**")
+
+    st.markdown(
+        """
+        <div style="text-align: center;">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWFmYTFua3huM21lZmx5dWR2dXEwOHFwMHFzbTNja3N6emlqYzBoYiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Z9UdKXe7bD8i4/giphy.gif" 
+                 alt="Run to Sidebar" width="300">
+            <p style="font-size: 18px; color: green;"><strong>👉 Ayo ke sidebar sekarang!</strong></p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
 
 
 
