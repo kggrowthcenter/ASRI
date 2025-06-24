@@ -6,13 +6,12 @@ from data_processing import finalize_data
 from navigation import make_sidebar
 
 st.set_page_config(page_title="Lestari Academy Dashboard", layout="wide")
-# Cek login status
+
+if st.session_state.get("authentication_status"):
+    make_sidebar()
 if not st.session_state.get("authentication_status"):
     st.error("⛔ You must log in to access this page.")
     st.stop()
-if st.session_state.get("authentication_status"):
-    make_sidebar()
-
 # Fetch data
 _, df_lestari, _ = finalize_data()
 
