@@ -111,6 +111,7 @@ with col3:
     )
     st.dataframe(school_roles, height=220)
 
+df_pendaftar = filtered_df[pendaftar_cols]
 
 # Expandable Data Tables
 with st.expander("📄 Lihat Data Pendaftar"):
