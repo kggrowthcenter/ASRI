@@ -97,13 +97,20 @@ with col2:
     city_counts.columns = ['Kota', 'Jumlah Sekolah']
     st.dataframe(city_counts, height=220)
 
-# --- Col3: Sekolah, jumlah nama terdaftar (student saja) ---
+# --- Col3: Sekolah, jumlah nama terdaftar per role ---
 with col3:
     st.write("Nama Sekolah")
-    students_df = filtered_df[filtered_df['role_peserta'] == 'student']
-    school_counts = students_df.groupby('school_name')['nama_terdaftar'].nunique().reset_index()
-    school_counts.columns = ['Sekolah', 'Nama Terdaftar']
-    st.dataframe(school_counts, height=220)
+    school_roles = (
+        filtered_df.groupby(['school_name', 'role_terdaftar'])['nama_terdaftar']
+        .nunique()
+        .reset_index()
+        .pivot(index='school_name', columns='role_terdaftar', values='nama_terdaftar')
+        .fillna(0)
+        .astype(int)
+        .reset_index()
+    )
+    st.dataframe(school_roles, height=220)
+
 
 # Expandable Data Tables
 with st.expander("📄 Lihat Data Pendaftar"):
