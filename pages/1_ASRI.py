@@ -67,10 +67,10 @@ with col1:
 with col2:
     grade_counts = (
         filtered_df.dropna(subset=['grade'])
-        .groupby('grade')['nama_terdaftar']
+        .groupby('grade')['peserta']
         .nunique()
         .reset_index()
-        .rename(columns={'name_terdaftar': 'Jumlah', 'grade': 'Grade'})
+        .rename(columns={'peserta': 'Jumlah', 'grade': 'Grade'})
     )
     grade_chart = alt.Chart(grade_counts).mark_bar().encode(
         x='Jumlah:Q',
@@ -100,14 +100,29 @@ with col2:
 # --- Col3: Sekolah, jumlah nama terdaftar (student saja) ---
 with col3:
     st.write("Nama Sekolah")
-    students_df = filtered_df[filtered_df['role_terdaftar'] == 'student']
+    students_df = filtered_df[filtered_df['role_peserta'] == 'student']
     school_counts = students_df.groupby('school_name')['nama_terdaftar'].nunique().reset_index()
     school_counts.columns = ['Sekolah', 'Nama Terdaftar']
     st.dataframe(school_counts, height=220)
 
-# Expandable Data Table
+# Expandable Data Tables
 with st.expander("📄 Lihat Data Pendaftar"):
-    st.dataframe(filtered_df)
+    pendaftar_cols = [
+        'tanggal_daftar', 'nama_pendaftar', 'email', 'no_tlp',
+        'role_terdaftar', 'school_name', 'school_address',
+        'school_city', 'school_district', 'school_subdistrict', 'school_province'
+    ]
+    df_pendaftar = filtered_df[pendaftar_cols]
+    st.dataframe(df_pendaftar)
+
+with st.expander("📄 Lihat Data Peserta"):
+    peserta_cols = ['role_peserta', 'grade', 'peserta', 'no_tlp_student', 'school_name']
+    df_peserta = filtered_df[peserta_cols]
+    st.dataframe(df_peserta)
+
+# Button update data
+if st.button("🔄 Update Data"):
+    st.experimental_rerun()
 
 
 # Unduh data
