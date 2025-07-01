@@ -111,7 +111,7 @@ with col3:
     )
     st.dataframe(school_roles, height=220)
 
-df_pendaftar = filtered_df[pendaftar_cols]
+
 
 # Expandable Data Tables
 with st.expander("📄 Lihat Data Pendaftar"):
@@ -120,13 +120,22 @@ with st.expander("📄 Lihat Data Pendaftar"):
         'role_terdaftar', 'school_name', 'school_address',
         'school_city', 'school_district', 'school_subdistrict', 'school_province'
     ]
-    df_pendaftar = filtered_df[pendaftar_cols]
-    st.dataframe(df_pendaftar)
+    available_pendaftar_cols = [col for col in pendaftar_cols if col in filtered_df.columns]
+    if available_pendaftar_cols:
+        df_pendaftar = filtered_df[available_pendaftar_cols]
+        st.dataframe(df_pendaftar)
+    else:
+        st.warning("❗ Kolom-kolom untuk data pendaftar tidak ditemukan.")
 
 with st.expander("📄 Lihat Data Peserta"):
     peserta_cols = ['role_peserta', 'grade', 'peserta', 'no_tlp_student', 'school_name']
-    df_peserta = filtered_df[peserta_cols]
-    st.dataframe(df_peserta)
+    available_peserta_cols = [col for col in peserta_cols if col in filtered_df.columns]
+    if available_peserta_cols:
+        df_peserta = filtered_df[available_peserta_cols]
+        st.dataframe(df_peserta)
+    else:
+        st.warning("❗ Kolom-kolom untuk data peserta tidak ditemukan.")
+
 
 # Button update data
 if st.button("🔄 Update Data"):
