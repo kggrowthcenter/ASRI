@@ -101,10 +101,10 @@ with col2:
 with col3:
     st.write("Nama Sekolah")
     school_roles = (
-        filtered_df.groupby(['school_name', 'role_peserta'])['peserta']
+        filtered_df.groupby(['school_name', 'role_peserta'])['serial_cpm']
         .nunique()
         .reset_index()
-        .pivot(index='school_name', columns='role_peserta', values='peserta')
+        .pivot(index='school_name', columns='role_peserta', values='serial_cpm')
         .fillna(0)
         .astype(int)
         .reset_index()
