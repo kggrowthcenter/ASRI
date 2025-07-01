@@ -120,12 +120,23 @@ with st.expander("📄 Lihat Data Pendaftar"):
         'role_terdaftar', 'school_name', 'school_address',
         'school_city', 'school_district', 'school_subdistrict', 'school_province'
     ]
-    available_pendaftar_cols = [col for col in pendaftar_cols if col in filtered_df.columns]
-    if available_pendaftar_cols:
-        df_pendaftar = filtered_df[available_pendaftar_cols]
+    
+    # Tambahkan serial_cp untuk distinct
+    cols_for_distinct = pendaftar_cols + ['serial_cp'] if 'serial_cp' in filtered_df.columns else pendaftar_cols
+    available_cols = [col for col in cols_for_distinct if col in filtered_df.columns]
+
+    if available_cols:
+        df_pendaftar = filtered_df[available_cols]
+
+        # Distinct by serial_cp
+        if 'serial_cp' in df_pendaftar.columns:
+            df_pendaftar = df_pendaftar.drop_duplicates(subset='serial_cp')
+            df_pendaftar = df_pendaftar.drop(columns='serial_cp')
+
         st.dataframe(df_pendaftar)
     else:
         st.warning("❗ Kolom-kolom untuk data pendaftar tidak ditemukan.")
+
 
 with st.expander("📄 Lihat Data Peserta"):
     peserta_cols = ['role_peserta', 'grade', 'peserta', 'no_tlp_student', 'school_name']
