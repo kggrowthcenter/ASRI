@@ -11,8 +11,8 @@ st.set_page_config(page_title="Akademi Sekolah Lestari (ASRI) Dashboard", layout
 if st.session_state.get("authentication_status"):
     make_sidebar()
 if not st.session_state.get("authentication_status"):
-    st.error("⛔ You must log in to access this page.")
-    st.stop()
+    st.experimental_set_query_params()
+    st.experimental_rerun()
 # Fetch data
 df_asri, _, _ = finalize_data()
 
@@ -29,10 +29,10 @@ columns_list = ['school_name', 'school_city', 'school_province', 'role_pendaftar
 filtered_df, selected_filters = make_filter(columns_list, df_asri)
 
 # Metrics
-#col1, col2, col3 = st.columns(3)
-#col1.metric("👤 Jumlah Pendaftar", filtered_df['email'].nunique())
-#col2.metric("🏫 Jumlah Sekolah", filtered_df['school_name'].nunique())
-#col3.metric("👥 Jumlah Peserta", filtered_df['nama_terdaftar'].nunique())
+col1, col2, col3 = st.columns(3)
+col1.metric("👤 Jumlah Pendaftar", filtered_df['email'].nunique())
+col2.metric("🏫 Jumlah Sekolah", filtered_df['school_name'].nunique())
+col3.metric("👥 Jumlah Peserta", filtered_df['peserta'].nunique())
 
 # Chart 1: Pendaftar per Hari
 st.subheader("📈 Jumlah Pendaftar per Hari")
@@ -88,14 +88,14 @@ with col1:
     st.write("Provinsi Sekolah")
     prov_counts = filtered_df.groupby('school_province')['school_name'].nunique().reset_index()
     prov_counts.columns = ['Provinsi', 'Jumlah Sekolah']
-    st.dataframe(prov_counts, height=220)
+    st.dataframe(prov_counts, height=220,hide_index=True)
 
 # --- Col2: Kota Sekolah, hitung jumlah sekolah ---
 with col2:
     st.write("Kota Sekolah")
     city_counts = filtered_df.groupby('school_city')['school_name'].nunique().reset_index()
     city_counts.columns = ['Kota', 'Jumlah Sekolah']
-    st.dataframe(city_counts, height=220)
+    st.dataframe(city_counts, height=220,hide_index=True)
 
 # --- Col3: Sekolah, jumlah nama terdaftar per role ---
 with col3:
@@ -109,7 +109,7 @@ with col3:
         .astype(int)
         .reset_index()
     )
-    st.dataframe(school_roles, height=220)
+    st.dataframe(school_roles, height=220,hide_index=True)
 
 
 
