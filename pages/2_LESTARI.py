@@ -10,8 +10,8 @@ st.set_page_config(page_title="Lestari Academy Dashboard", layout="wide")
 if st.session_state.get("authentication_status"):
     make_sidebar()
 if not st.session_state.get("authentication_status"):
-    st.error("⛔ You must log in to access this page.")
-    st.stop()
+    st.switch_page("streamlit_app.py")
+    
 # Fetch data
 _, df_lestari, _ = finalize_data()
 
