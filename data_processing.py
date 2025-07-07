@@ -6,7 +6,7 @@ from fetch_data import fetch_data_asri, fetch_data_lestari, fetch_creds
 @st.cache_data(ttl=1800)
 def finalize_data_asri():
     df_asri = fetch_data_asri()
-    df_asri['tanggal_daftar'] = pd.to_datetime(df_asri['tanggal_daftar'], format="%Y-%m-%d").dt.date
+    df_asri['tanggal_daftar'] = pd.to_datetime(df_asri['tanggal_daftar'])
     return df_asri
 
 @st.cache_data(ttl=1800)
