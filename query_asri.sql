@@ -16,6 +16,7 @@ cpm.serial as serial_cpm,
 cpm.`role` as role_peserta, 
 cpm.grade as grade, 
 cpm.full_name as peserta,
+cpm.email as email_peserta,
 cpm.phone_number as no_tlp_student
 from competition_participants cp 
 left join competition_participant_members cpm on cpm.competition_participant_serial = cp.serial
