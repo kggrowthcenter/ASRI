@@ -10,8 +10,7 @@ st.set_page_config(
     page_title="Lestari Academy Dashboard",
     page_icon="🍀",
     layout="centered",
-    initial_sidebar_state="collapsed",
-    name="Home"
+    initial_sidebar_state="collapsed"
 )
 
 
