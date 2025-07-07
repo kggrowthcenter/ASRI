@@ -11,8 +11,8 @@ st.set_page_config(page_title="Akademi Sekolah Lestari (ASRI) Dashboard", layout
 if st.session_state.get("authentication_status"):
     make_sidebar()
 if not st.session_state.get("authentication_status"):
-    st.experimental_set_query_params()
-    st.experimental_rerun()
+    st.query_params.clear()
+    st.rerun()
 # Fetch data
 df_asri, _, _ = finalize_data()
 
