@@ -10,8 +10,10 @@ st.set_page_config(
     page_title="Lestari Academy Dashboard",
     page_icon="🍀",
     layout="centered",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="collapsed",
+    name="Home"
 )
+
 
 # 🔥 Hapus seluruh sidebar (saat login screen) & title bawaan sidebar
 #hide_sidebar_total = """
