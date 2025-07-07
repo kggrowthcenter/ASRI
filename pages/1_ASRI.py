@@ -139,7 +139,7 @@ with st.expander("📄 Lihat Data Pendaftar"):
 
 
 with st.expander("📄 Lihat Data Peserta"):
-    peserta_cols = ['peserta','email_peserta','no_tlp_student','role_peserta', 'grade', 'school_name', 'school_city']
+    peserta_cols = ['peserta','email_peserta','no_tlp_student','role_peserta', 'grade', 'school_name', 'school_address','school_city', 'school_district', 'school_subdistrict', 'school_province']
     available_peserta_cols = [col for col in peserta_cols if col in filtered_df.columns]
     if available_peserta_cols:
         df_peserta = filtered_df[available_peserta_cols]
