@@ -25,10 +25,10 @@ if all(col in df_lestari.columns for col in ['duration', 'progress', 'email']):
     df_lestari['duration_jam'] = df_lestari['duration'] / 3600  # Ubah detik ke jam
 
     # Ringkasan metrik
-    #col1, col2, col3 = st.columns(3)
-    #col1.metric("👥 Jumlah User", df_lestari['email'].nunique())
-    #col2.metric("📈 Rata-rata Progress", f"{df_lestari['progress'].mean():.2f}%")
-    #col3.metric("⏱️ Total Durasi Belajar", f"{df_lestari['duration_jam'].sum():.2f} jam")
+    col1, col2, col3 = st.columns(3)
+    col1.metric("👥 Jumlah User", df_lestari['email'].nunique())
+    col2.metric("📈 Rata-rata Progress", f"{df_lestari['progress'].mean():.2f}%")
+    col3.metric("⏱️ Total Durasi Belajar", f"{df_lestari['duration_jam'].sum():.2f} jam")
 
     #st.divider()
 
