@@ -7,6 +7,7 @@ from fetch_data import fetch_data_asri, fetch_data_lestari, fetch_creds
 def finalize_data_asri():
     df_asri = fetch_data_asri()
     df_asri['tanggal_daftar'] = pd.to_datetime(df_asri['tanggal_daftar'], utc=True).dt.tz_convert('Asia/Jakarta')
+    df_asri['last_update'] = pd.to_datetime(df_asri['last_update'], utc=True).dt.tz_convert('Asia/Jakarta'
     return df_asri
 
 @st.cache_data(ttl=1800)
