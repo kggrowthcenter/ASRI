@@ -51,7 +51,7 @@ if all(col in df_lestari.columns for col in ['duration', 'progress', 'email']):
                 .sort_values(by='Jumlah Pengguna', ascending=False)
                 .head(10)
             )
-            st.dataframe(top_title, use_container_width=True)
+            st.dataframe(top_title, use_container_width=True, hide_index=True)
         else:
             st.warning("Kolom `title` tidak ditemukan.")
 
@@ -65,7 +65,7 @@ if all(col in df_lestari.columns for col in ['duration', 'progress', 'email']):
                 .sort_values(by='Jumlah Pengguna', ascending=False)
                 .head(10)
             )
-            st.dataframe(top_category, use_container_width=True)
+            st.dataframe(top_category, use_container_width=True, hide_index=True)
         else:
             st.warning("Kolom `category` tidak ditemukan.")
 
