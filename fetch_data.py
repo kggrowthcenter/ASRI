@@ -9,7 +9,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 import toml
 
 # Function to connect to ID via SSH tunnel and fetch data
-@st.cache_resource(ttl=86400)
+@st.cache_resource(ttl=1800)
 def fetch_data_asri():
     try:
         # Load the private key content from secrets for ID
@@ -50,7 +50,7 @@ def fetch_data_asri():
         return pd.DataFrame()
 
 # Function to connect to ID via SSH tunnel and fetch data
-@st.cache_resource(ttl=86400)
+@st.cache_resource(ttl=1800)
 def fetch_data_lestari():
     try:
         # Load the private key content from secrets for ID
@@ -91,7 +91,7 @@ def fetch_data_lestari():
         return pd.DataFrame()
 
 
-@st.cache_resource(ttl=86400)
+@st.cache_resource(ttl=1800)
 def fetch_creds():
     secret_info = st.secrets["sheets"]
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
