@@ -13,7 +13,9 @@ def finalize_data_asri():
 @st.cache_data(ttl=1800)
 def finalize_data_lestari():
     df_lestari = fetch_data_lestari()
-    df_lestari['last_update'] = pd.to_datetime(df_lestari['last_update'], utc=True).dt.tz_convert('Asia/Jakarta')
+    df_lestari['regis_date'] = pd.to_datetime(df_lestari['regis_date'], utc=True).dt.tz_convert('Asia/Jakarta').dt.tz_localize(None)
+    df_lestari['enroll_date'] = pd.to_datetime(df_lestari['enroll_date'], utc=True).dt.tz_convert('Asia/Jakarta').dt.tz_localize(None)
+    df_lestari['last_update'] = pd.to_datetime(df_lestari['last_update'], utc=True).dt.tz_convert('Asia/Jakarta').dt.tz_localize(None)
     return df_lestari
 
 @st.cache_data(ttl=1800)
