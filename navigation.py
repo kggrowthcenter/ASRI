@@ -15,7 +15,13 @@ def make_sidebar():
 
             st.write("")
             st.write("")
+            # Button to refresh all cached data
+            if st.sidebar.button("🔄 Refresh Data"):
+                st.cache_data.clear()
+                st.rerun()
 
+            if st.button("🚪 Log out"):
+                logout()
             if st.button("Log out"):
                 logout()
 
