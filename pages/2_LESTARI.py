@@ -40,7 +40,7 @@ if all(col in filtered_df.columns for col in ['duration', 'progress', 'email']):
     # Ringkasan metrik
     col1, col2, col3, col4 = st.columns(4)
     col1.metric("👥 Jumlah Registered", filtered_df['serial'].nunique())
-    col2.metric("✅ Jumlah Enrollment", filtered_df[filtered_df['enroll_date'].notnull()]['serial'].nunique())
+    col2.metric("✅ Jumlah Unq Enrollment", filtered_df[filtered_df['enroll_date'].notnull()]['serial'].nunique())
     col3.metric("📈 Rata-rata Progress", f"{filtered_df['progress'].mean():.2f}%")
     col4.metric("⏱️ Total Durasi Belajar", f"{filtered_df['duration_jam'].sum():.2f} jam")
     # ============================
