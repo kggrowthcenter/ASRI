@@ -74,7 +74,7 @@ if all(col in filtered_df.columns for col in ['duration', 'progress', 'email']):
         daily_summary['jumlah_registered'] = daily_summary['jumlah_registered'].astype(int)
         daily_summary['jumlah_enrollment'] = daily_summary['jumlah_enrollment'].astype(int)
 
-        st.table(daily_summary)
+        st.dataframe(daily_summary)
 
 
 
