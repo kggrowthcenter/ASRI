@@ -13,16 +13,10 @@ def finalize_data_asri():
 @st.cache_data(ttl=1800)
 def finalize_data_lestari():
     df_lestari = fetch_data_lestari()
-
-    # Konversi semua datetime ke Asia/Jakarta lalu hilangkan timezone info
-    for col in ['regis_date', 'enroll_date', 'last_update']:
-        df_lestari[col] = pd.to_datetime(df_lestari[col], utc=True)\
-                            .dt.tz_convert('Asia/Jakarta')\
-                            .dt.tz_localize(None)
-
-    # First enroll (sudah dalam WIB karena enroll_date sudah dikonversi)
+    df_lestari['regis_date'] = pd.to_datetime(df_lestari['regis_date'], utc=True).dt.tz_convert('Asia/Jakarta').dt.tz_localize(None)
+    df_lestari['enroll_date'] = pd.to_datetime(df_lestari['enroll_date'], utc=True).dt.tz_convert('Asia/Jakarta').dt.tz_localize(None)
+    df_lestari['last_update'] = pd.to_datetime(df_lestari['last_update'], utc=True).dt.tz_convert('Asia/Jakarta').dt.tz_localize(None)
     df_lestari['first_enroll'] = df_lestari.groupby('serial')['enroll_date'].transform('min')
-
     return df_lestari
 
 
