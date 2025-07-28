@@ -52,8 +52,8 @@ if all(col in filtered_df.columns for col in ['duration', 'progress', 'email']):
         filtered_df['first_enroll'] = pd.to_datetime(filtered_df['first_enroll']).dt.date
 
         # Hitung jumlah pendaftar per regis_date
-        reg_df = filtered_df.groupby('regis_date')['serial'].nunique().reset_index()
-        reg_df = reg_df.rename(columns={'regis_date': 'Tanggal', 'serial': 'jumlah_registered'})
+        reg_df = filtered_df.groupby('regis_date')['email'].nunique().reset_index()
+        reg_df = reg_df.rename(columns={'regis_date': 'Tanggal', 'email': 'jumlah_registered'})
 
         # Hitung jumlah enrollment per first_enroll
         enroll_df = filtered_df.groupby('first_enroll')['serial'].nunique().reset_index()
