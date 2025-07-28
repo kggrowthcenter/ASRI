@@ -91,7 +91,7 @@ def fetch_data_lestari():
         return pd.DataFrame()
 
 
-@st.cache_resource(ttl=1800)
+@st.cache_data(ttl=1800)
 def fetch_creds():
     secret_info = st.secrets["sheets"]
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
