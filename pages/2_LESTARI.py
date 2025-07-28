@@ -43,6 +43,29 @@ if all(col in filtered_df.columns for col in ['duration', 'progress', 'email']):
     col2.metric("✅ Jumlah Enrollment", filtered_df[filtered_df['enroll_date'].notnull()]['serial'].nunique())
     col3.metric("📈 Rata-rata Progress", f"{filtered_df['progress'].mean():.2f}%")
     col4.metric("⏱️ Total Durasi Belajar", f"{filtered_df['duration_jam'].sum():.2f} jam")
+    # ============================
+    st.subheader("📊 Aktivitas Harian")
+    with st.expander("📆 Tabel Harian"):
+
+        # Pastikan tanggal dalam format date
+        filtered_df['regis_date'] = pd.to_datetime(filtered_df['regis_date']).dt.date
+        filtered_df['first_enroll'] = pd.to_datetime(filtered_df['first_enroll']).dt.date
+
+        # Hitung jumlah pendaftar per regis_date
+        reg_df = filtered_df.groupby('regis_date')['serial'].nunique().reset_index()
+        reg_df = reg_df.rename(columns={'regis_date': 'Tanggal', 'serial': 'jumlah_registered'})
+
+        # Hitung jumlah enrollment per first_enroll
+        enroll_df = filtered_df.groupby('first_enroll')['serial'].nunique().reset_index()
+        enroll_df = enroll_df.rename(columns={'first_enroll': 'Tanggal', 'serial': 'jumlah_enrollment'})
+
+        # Gabungkan dua tabel berdasarkan tanggal
+        daily_summary = pd.merge(reg_df, enroll_df, on='Tanggal', how='outer').fillna(0).sort_values('Tanggal')
+        daily_summary['jumlah_registered'] = daily_summary['jumlah_registered'].astype(int)
+        daily_summary['jumlah_enrollment'] = daily_summary['jumlah_enrollment'].astype(int)
+
+        st.table(daily_summary)
+
 
     # ============================
     # Top Title dan Top Category
@@ -80,16 +103,6 @@ if all(col in filtered_df.columns for col in ['duration', 'progress', 'email']):
             st.warning("Kolom `category` tidak ditemukan.")
 
     # ============================
-    # Tabel Harian First Enroll
-    # ============================
-    st.subheader("📊 Aktivitas Harian Berdasarkan First Enroll")
-    with st.expander("📆 Tabel Harian"):
-        filtered_df['first_enroll'] = pd.to_datetime(filtered_df['first_enroll']).dt.date
-        daily_summary = filtered_df.groupby('first_enroll').agg(
-            jumlah_registered=('serial', 'nunique'),
-            jumlah_enrollment=('first_enroll', 'nunique')
-        ).reset_index().rename(columns={'first_enroll': 'Tanggal'})
-        st.table(daily_summary)
 
     # ============================
     # Tabel Detail dan Unduh
