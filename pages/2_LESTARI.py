@@ -45,26 +45,37 @@ if all(col in filtered_df.columns for col in ['duration', 'progress', 'email']):
     col4.metric("⏱️ Total Durasi Belajar", f"{filtered_df['duration_jam'].sum():.2f} jam")
     # ============================
     st.subheader("📊 Aktivitas Harian")
+
     with st.expander("📆 Tabel Harian"):
 
-        # Pastikan tanggal dalam format date
+        # Pastikan dalam format date
         filtered_df['regis_date'] = pd.to_datetime(filtered_df['regis_date']).dt.date
         filtered_df['first_enroll'] = pd.to_datetime(filtered_df['first_enroll']).dt.date
 
-        # Hitung jumlah pendaftar per regis_date
-        reg_df = filtered_df.groupby('regis_date')['email'].nunique().reset_index()
-        reg_df = reg_df.rename(columns={'regis_date': 'Tanggal', 'email': 'jumlah_registered'})
+        # Buat range tanggal lengkap dari rentang filter
+        date_range = pd.date_range(start=start_date, end=end_date).date
+        full_dates = pd.DataFrame({'Tanggal': date_range})
 
-        # Hitung jumlah enrollment per first_enroll
+        # Agregasi jumlah pendaftar
+        reg_df = filtered_df.groupby('regis_date')['serial'].nunique().reset_index()
+        reg_df = reg_df.rename(columns={'regis_date': 'Tanggal', 'serial': 'jumlah_registered'})
+
+        # Agregasi jumlah enrollment
         enroll_df = filtered_df.groupby('first_enroll')['serial'].nunique().reset_index()
         enroll_df = enroll_df.rename(columns={'first_enroll': 'Tanggal', 'serial': 'jumlah_enrollment'})
 
-        # Gabungkan dua tabel berdasarkan tanggal
-        daily_summary = pd.merge(reg_df, enroll_df, on='Tanggal', how='outer').fillna(0).sort_values('Tanggal')
+        # Gabungkan ke tanggal lengkap
+        daily_summary = full_dates \
+            .merge(reg_df, on='Tanggal', how='left') \
+            .merge(enroll_df, on='Tanggal', how='left') \
+            .fillna(0)
+
+        # Pastikan integer
         daily_summary['jumlah_registered'] = daily_summary['jumlah_registered'].astype(int)
         daily_summary['jumlah_enrollment'] = daily_summary['jumlah_enrollment'].astype(int)
 
         st.table(daily_summary)
+
 
 
     # ============================
