@@ -22,8 +22,6 @@ def make_sidebar():
 
             if st.button("🚪 Log out"):
                 logout()
-            if st.button("Log out"):
-                logout()
 
 def logout():
     st.session_state.logged_in = False
