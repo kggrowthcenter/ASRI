@@ -16,7 +16,7 @@ def make_sidebar():
             st.write("")
             st.write("")
             # Button to refresh all cached data
-            if st.sidebar.button("🔄 Refresh Data"):
+            if st.sidebar.button("🔄 Update Data"):
                 st.cache_data.clear()
                 st.rerun()
 
