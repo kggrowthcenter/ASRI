@@ -147,12 +147,6 @@ with st.expander("📄 Lihat Data Peserta"):
     else:
         st.warning("❗ Kolom-kolom untuk data peserta tidak ditemukan.")
 
-
-# Button update data
-if st.button("🔄 Update Data"):
-    st.experimental_rerun()
-
-
 # Unduh data
 csv = filtered_df.to_csv(index=False).encode('utf-8')
 st.download_button("📥 Unduh Data CSV", data=csv, file_name="data_pendaftar_asri.csv", mime='text/csv')
