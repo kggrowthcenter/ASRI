@@ -30,8 +30,8 @@ st.subheader("📅 Filter Tanggal Enrollment")
 start_date, end_date = st.date_input("Rentang Tanggal", [min_date, max_date])
 
 filtered_df = df_lestari[
-    (df_lestari['enroll_date'] >= pd.to_datetime(start_date)) &
-    (df_lestari['enroll_date'] <= pd.to_datetime(end_date))
+    (df_lestari['regis_date'] >= pd.to_datetime(start_date)) &
+    (df_lestari['regis_date'] <= pd.to_datetime(end_date))
 ].copy()
 
 # Validasi kolom wajib
