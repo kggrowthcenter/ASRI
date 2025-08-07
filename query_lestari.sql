@@ -12,7 +12,7 @@ SELECT
 	CASE
 		WHEN cu.accomplished_at IS NULL THEN 'In Progress'
 		WHEN cu.accomplished_at IS NOT NULL THEN 'Finished'
-	END AS 'course_status',
+	END AS 'course_status'
 FROM users u
 LEFT JOIN course_users cu ON cu.user_serial = u.serial
 LEFT JOIN courses c ON cu.course_serial = c.serial 
