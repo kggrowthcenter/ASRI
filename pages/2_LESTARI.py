@@ -61,7 +61,7 @@ with col3:
         st.session_state.to_date = today
 
 # 🎯 Filter berdasarkan title
-st.markdown("##### 📖 Filter Berdasarkan Title")
+st.markdown("##### 📖 Filter Title")
 all_titles = df_lestari['title'].dropna().unique().tolist()
 selected_titles = st.multiselect("Pilih Title", options=all_titles, default=[])
 
@@ -171,6 +171,7 @@ if all(col in filtered_df.columns for col in ['duration', 'progress', 'email']):
 
 else:
     st.error("Data tidak memiliki kolom 'duration', 'progress', atau 'email'. Harap periksa sumber data.")
+
 
 
 
