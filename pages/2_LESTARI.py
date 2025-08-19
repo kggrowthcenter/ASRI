@@ -63,14 +63,17 @@ with col3:
 # 🎯 Filter berdasarkan title
 st.markdown("#### 🎓 Filter Berdasarkan Title")
 all_titles = df_lestari['title'].dropna().unique().tolist()
-selected_titles = st.multiselect("Pilih Title", options=all_titles, default=all_titles)
+selected_titles = st.multiselect("Pilih Title", options=all_titles, default=[])
 
 # Apply filter ke data
 mask = (
     (df_lestari['enroll_date'].dt.date >= st.session_state.from_date) &
-    (df_lestari['enroll_date'].dt.date <= st.session_state.to_date) &
-    (df_lestari['title'].isin(selected_titles))
+    (df_lestari['enroll_date'].dt.date <= st.session_state.to_date)
 )
+
+if selected_titles:  # Kalau ada yang dipilih
+    mask = mask & (df_lestari['title'].isin(selected_titles))
+
 filtered_df = df_lestari[mask]
 
 
@@ -168,6 +171,7 @@ if all(col in filtered_df.columns for col in ['duration', 'progress', 'email']):
 
 else:
     st.error("Data tidak memiliki kolom 'duration', 'progress', atau 'email'. Harap periksa sumber data.")
+
 
 
 
