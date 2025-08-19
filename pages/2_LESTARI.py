@@ -65,6 +65,7 @@ mask = (df_lestari['enroll_date'].dt.date >= st.session_state.from_date) & \
        (df_lestari['enroll_date'].dt.date <= st.session_state.to_date)
 filtered_df = df_lestari[mask]
 
+st.divider()
 # Validasi kolom wajib
 if all(col in filtered_df.columns for col in ['duration', 'progress', 'email']):
     
@@ -158,4 +159,5 @@ if all(col in filtered_df.columns for col in ['duration', 'progress', 'email']):
 
 else:
     st.error("Data tidak memiliki kolom 'duration', 'progress', atau 'email'. Harap periksa sumber data.")
+
 
