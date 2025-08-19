@@ -22,12 +22,12 @@ df_lestari['duration_jam'] = df_lestari['duration'] / 3600
 # Filter tanggal berdasarkan enroll_date
 st.title("🌱 Lestari Academy Dashboard")
 st.write("📚 Dashboard ini menampilkan data aktivitas user selama pembelajaran.")
-st.divider()
+
 
 min_date = df_lestari['enroll_date'].min().date()
 max_date = df_lestari['enroll_date'].max().date()
 
-st.subheader("📅 Filter Tanggal Enrollment")
+st.write("📅 Filter Tanggal Enrollment")
 start_date, end_date = st.date_input("Rentang Tanggal", [min_date, max_date])
 
 filtered_df = df_lestari[
@@ -159,5 +159,6 @@ if all(col in filtered_df.columns for col in ['duration', 'progress', 'email']):
 
 else:
     st.error("Data tidak memiliki kolom 'duration', 'progress', atau 'email'. Harap periksa sumber data.")
+
 
 
