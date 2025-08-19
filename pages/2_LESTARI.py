@@ -27,7 +27,7 @@ st.write("📚 Dashboard ini menampilkan data aktivitas user selama pembelajaran
 min_date = df_lestari['enroll_date'].min().date()
 max_date = df_lestari['enroll_date'].max().date()
 
-st.markdown("## 📅 Filter Tanggal Enrollment")
+st.markdown("#### 📅 Filter Tanggal Enrollment")
 start_date, end_date = st.date_input("Rentang Tanggal", [min_date, max_date])
 
 filtered_df = df_lestari[
@@ -159,6 +159,7 @@ if all(col in filtered_df.columns for col in ['duration', 'progress', 'email']):
 
 else:
     st.error("Data tidak memiliki kolom 'duration', 'progress', atau 'email'. Harap periksa sumber data.")
+
 
 
 
