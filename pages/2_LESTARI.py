@@ -60,10 +60,19 @@ with col3:
         st.session_state.from_date = today
         st.session_state.to_date = today
 
+# 🎯 Filter berdasarkan title
+st.markdown("#### 🎓 Filter Berdasarkan Title")
+all_titles = df_lestari['title'].dropna().unique().tolist()
+selected_titles = st.multiselect("Pilih Title", options=all_titles, default=all_titles)
+
 # Apply filter ke data
-mask = (df_lestari['enroll_date'].dt.date >= st.session_state.from_date) & \
-       (df_lestari['enroll_date'].dt.date <= st.session_state.to_date)
+mask = (
+    (df_lestari['enroll_date'].dt.date >= st.session_state.from_date) &
+    (df_lestari['enroll_date'].dt.date <= st.session_state.to_date) &
+    (df_lestari['title'].isin(selected_titles))
+)
 filtered_df = df_lestari[mask]
+
 
 st.divider()
 # Validasi kolom wajib
@@ -159,6 +168,7 @@ if all(col in filtered_df.columns for col in ['duration', 'progress', 'email']):
 
 else:
     st.error("Data tidak memiliki kolom 'duration', 'progress', atau 'email'. Harap periksa sumber data.")
+
 
 
 
