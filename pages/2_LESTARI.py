@@ -27,7 +27,7 @@ st.write("📚 Dashboard ini menampilkan data aktivitas user selama pembelajaran
 min_date = df_lestari['enroll_date'].min().date()
 max_date = df_lestari['enroll_date'].max().date()
 
-st.markdown("#### 📅 Filter Tanggal Enrollment")
+st.markdown("##### 📅 Filter Tanggal Enrollment")
 start_date, end_date = st.date_input("Rentang Tanggal", [min_date, max_date])
 
 filtered_df = df_lestari[
@@ -61,7 +61,7 @@ with col3:
         st.session_state.to_date = today
 
 # 🎯 Filter berdasarkan title
-st.markdown("#### 🎓 Filter Berdasarkan Title")
+st.markdown("##### 📖 Filter Berdasarkan Title")
 all_titles = df_lestari['title'].dropna().unique().tolist()
 selected_titles = st.multiselect("Pilih Title", options=all_titles, default=[])
 
@@ -84,7 +84,7 @@ if all(col in filtered_df.columns for col in ['duration', 'progress', 'email']):
     # Ringkasan metrik
     col1, col2, col3, col4 = st.columns(4)
     col1.metric("👥 Jumlah Registered", filtered_df['serial'].nunique())
-    col2.metric("✅ Jumlah Unq Enrollment", filtered_df[filtered_df['enroll_date'].notnull()]['serial'].nunique())
+    col2.metric("✍🏻 Jumlah Unq Enrollment", filtered_df[filtered_df['enroll_date'].notnull()]['serial'].nunique())
     col3.metric("📈 Rata-rata Progress", f"{filtered_df['progress'].mean():.2f}%")
     col4.metric("⏱️ Total Durasi Belajar", f"{filtered_df['duration_jam'].sum():.2f} jam")
     # ============================
@@ -171,6 +171,7 @@ if all(col in filtered_df.columns for col in ['duration', 'progress', 'email']):
 
 else:
     st.error("Data tidak memiliki kolom 'duration', 'progress', atau 'email'. Harap periksa sumber data.")
+
 
 
 
