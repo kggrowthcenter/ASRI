@@ -41,6 +41,41 @@ if "from_date" not in st.session_state:
 if "to_date" not in st.session_state:
     st.session_state.to_date = max_date
 
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    if st.button("Lifetime"):
+        st.session_state.from_date = min_date
+        st.session_state.to_date = max_date
+
+with col2:
+    if st.button("This Month"):
+        today = datetime.datetime.now().date()
+        st.session_state.from_date = datetime.date(today.year, today.month, 1)
+        st.session_state.to_date = today
+
+with col3:
+    if st.button("📍 Today"):
+        today = datetime.datetime.now().date()
+        st.session_state.from_date = today
+        st.session_state.to_date = today
+mask = (
+    (
+        (df_lestari['enroll_date'].dt.date >= st.session_state.from_date) &
+        (df_lestari['enroll_date'].dt.date <= st.session_state.to_date)
+    )
+    | (df_lestari['enroll_date'].isna())
+)
+if selected_titles:
+    mask = mask & (df_lestari['title'].isin(selected_titles))
+
+filtered_df = df_lestari[mask]
+
+
+# 🎯 Filter berdasarkan title
+st.markdown("##### 📖 Filter Title")
+all_titles = df_lestari['title'].dropna().unique().tolist()
+selected_titles = st.multiselect("Pilih Title", options=all_titles, default=[])
 
 st.divider()
 # Validasi kolom wajib
@@ -136,6 +171,7 @@ if all(col in filtered_df.columns for col in ['duration', 'progress', 'email']):
 
 else:
     st.error("Data tidak memiliki kolom 'duration', 'progress', atau 'email'. Harap periksa sumber data.")
+
 
 
 
