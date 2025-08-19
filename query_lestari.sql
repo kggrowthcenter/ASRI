@@ -14,12 +14,6 @@ SELECT
     WHEN cu.accomplished_at IS NULL THEN 'In Progress'
     ELSE 'Finished'
   END AS course_status,
-    CONCAT(
-    COUNT(DISTINCT CASE WHEN cup.progress_duration > 0 OR cup.progress_percentage > 0 
-                        THEN cup.course_content_serial END),
-    '/',
-    COUNT(DISTINCT cc.serial)
-  ) AS progress_detail,
   CASE
     WHEN c.serial = 'COURSE-000137' THEN 14276.7599182128
     WHEN c.serial = 'COURSE-000096' THEN 2919
