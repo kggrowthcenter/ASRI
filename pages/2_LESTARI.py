@@ -44,12 +44,12 @@ if "to_date" not in st.session_state:
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    if st.button("📆 Lifetime"):
+    if st.button("Lifetime"):
         st.session_state.from_date = min_date
         st.session_state.to_date = max_date
 
 with col2:
-    if st.button("🗓️ This Month"):
+    if st.button("This Month"):
         today = datetime.datetime.now().date()
         st.session_state.from_date = datetime.date(today.year, today.month, 1)
         st.session_state.to_date = today
@@ -159,6 +159,7 @@ if all(col in filtered_df.columns for col in ['duration', 'progress', 'email']):
 
 else:
     st.error("Data tidak memiliki kolom 'duration', 'progress', atau 'email'. Harap periksa sumber data.")
+
 
 
 
