@@ -19,7 +19,7 @@ SELECT
     ELSE 'Finished'
   END AS course_status,
   ROUND(SUM(cup.progress_duration), 0) AS duration,
-  AVG(cup.progress_percentage) AS progress,
+  ROUND(AVG(cup.progress_percentage),1) AS progress,
   CASE
     WHEN c.serial = 'COURSE-000137' THEN 14276.7599182128
     WHEN c.serial = 'COURSE-000096' THEN 2919
