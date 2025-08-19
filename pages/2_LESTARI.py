@@ -3,6 +3,7 @@ import pandas as pd
 import altair as alt
 from data_processing import finalize_data
 from navigation import make_sidebar
+import datetime
 
 st.set_page_config(page_title="Lestari Academy Dashboard", layout="wide")
 
@@ -33,6 +34,36 @@ filtered_df = df_lestari[
     (df_lestari['regis_date'] >= pd.to_datetime(start_date)) &
     (df_lestari['regis_date'] <= pd.to_datetime(end_date))
 ].copy()
+
+# Tentukan default state
+if "from_date" not in st.session_state:
+    st.session_state.from_date = min_date
+if "to_date" not in st.session_state:
+    st.session_state.to_date = max_date
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    if st.button("📆 Lifetime"):
+        st.session_state.from_date = min_date
+        st.session_state.to_date = max_date
+
+with col2:
+    if st.button("🗓️ This Month"):
+        today = datetime.datetime.now().date()
+        st.session_state.from_date = datetime.date(today.year, today.month, 1)
+        st.session_state.to_date = today
+
+with col3:
+    if st.button("📍 Today"):
+        today = datetime.datetime.now().date()
+        st.session_state.from_date = today
+        st.session_state.to_date = today
+
+# Apply filter ke data
+mask = (df_lestari['enroll_date'].dt.date >= st.session_state.from_date) & \
+       (df_lestari['enroll_date'].dt.date <= st.session_state.to_date)
+filtered_df = df_lestari[mask]
 
 # Validasi kolom wajib
 if all(col in filtered_df.columns for col in ['duration', 'progress', 'email']):
@@ -127,3 +158,4 @@ if all(col in filtered_df.columns for col in ['duration', 'progress', 'email']):
 
 else:
     st.error("Data tidak memiliki kolom 'duration', 'progress', atau 'email'. Harap periksa sumber data.")
+
