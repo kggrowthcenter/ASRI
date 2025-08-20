@@ -27,14 +27,23 @@ st.write("📚 Dashboard ini menampilkan data aktivitas user selama pembelajaran
 min_date = df_lestari['enroll_date'].min().date()
 max_date = df_lestari['enroll_date'].max().date()
 
-st.markdown("##### 📅 Filter Tanggal Enrollment")
-start_date, end_date = st.date_input("Rentang Tanggal", [min_date, max_date])
-
 # Tentukan default state
 if "from_date" not in st.session_state:
     st.session_state.from_date = min_date
 if "to_date" not in st.session_state:
     st.session_state.to_date = max_date
+
+st.markdown("##### 📅 Filter Tanggal Enrollment")
+start_date, end_date = st.date_input(
+    "Rentang Tanggal",
+    [st.session_state.from_date, st.session_state.to_date],  # ⬅️ bind ke session_state
+    min_value=min_date,
+    max_value=max_date
+)
+
+# Update session_state kalau user ubah manual di date_input
+st.session_state.from_date = start_date
+st.session_state.to_date = end_date
 
 col1, col2, col3 = st.columns(3)
 with col1:
@@ -75,6 +84,7 @@ if selected_titles:
     mask = mask & (df_lestari['title'].isin(selected_titles))
 
 filtered_df = df_lestari[mask]
+
 
 
 
@@ -173,6 +183,7 @@ if all(col in filtered_df.columns for col in ['duration', 'progress', 'email']):
 
 else:
     st.error("Data tidak memiliki kolom 'duration', 'progress', atau 'email'. Harap periksa sumber data.")
+
 
 
 
