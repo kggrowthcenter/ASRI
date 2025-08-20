@@ -74,11 +74,17 @@ selected_titles = st.multiselect(
 # Mask enroll_date (null tetap ikut)
 mask = (
     (
+        # enroll_date masuk rentang
         (df_lestari['enroll_date'].dt.date >= st.session_state.from_date) &
         (df_lestari['enroll_date'].dt.date <= st.session_state.to_date)
     )
-    | (df_lestari['enroll_date'].isna())
+    | (df_lestari['enroll_date'].isna())  # enroll_date kosong tetap ikut
+    | (  # tambahan: regis_date juga difilter
+        (df_lestari['regis_date'].dt.date >= st.session_state.from_date) &
+        (df_lestari['regis_date'].dt.date <= st.session_state.to_date)
+    )
 )
+
 
 if selected_titles:
     mask = mask & (df_lestari['title'].isin(selected_titles))
@@ -183,6 +189,7 @@ if all(col in filtered_df.columns for col in ['duration', 'progress', 'email']):
 
 else:
     st.error("Data tidak memiliki kolom 'duration', 'progress', atau 'email'. Harap periksa sumber data.")
+
 
 
 
