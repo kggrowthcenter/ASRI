@@ -59,8 +59,8 @@ GROUP BY
     COUNT(DISTINCT cc.serial
   ))*100 AS progress,
   ROUND(SUM(cup.progress_duration), 0) AS duration,
-  '' AS playlist_status,
-  '' AS partner_group_serial
+  pgm.status AS playlist_status,
+  pgm.partner_group_serial 
 FROM users u
 LEFT JOIN course_users cu ON cu.user_serial = u.serial
 LEFT JOIN courses c ON cu.course_serial = c.serial 
@@ -71,7 +71,8 @@ LEFT JOIN course_contents cc ON cc.course_serial = c.serial
 LEFT JOIN course_user_quiz_answers cuqa ON cuqa.course_content_serial = cup.course_content_serial AND cuqa.user_serial = cup.user_serial
 LEFT JOIN categories c2 ON c2.serial = c.category_serial 
 LEFT JOIN partner_playlists pp ON cup.partner_playlist_serial = pp.serial
-WHERE cu.partner_group_serial is NULL 
+LEFT JOIN partner_group_members pgm ON cu.user_serial = pgm.user_serial AND cu.partner_group_serial = pgm.partner_group_serial
+WHERE pgm.user_serial is NULL 
 GROUP BY
   u.serial,
   u.email,
@@ -81,4 +82,6 @@ GROUP BY
   c.title,
   c2.name,
   cu.accomplished_at,
-  c.serial
+  c.serial,
+  pgm.status,
+  pgm.partner_group_serial
