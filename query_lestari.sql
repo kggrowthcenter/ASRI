@@ -70,7 +70,7 @@ LEFT JOIN course_contents cc ON cc.course_serial = c.serial
 LEFT JOIN course_user_quiz_answers cuqa ON cuqa.course_content_serial = cup.course_content_serial AND cuqa.user_serial = cup.user_serial
 LEFT JOIN categories c2 ON c2.serial = c.category_serial 
 LEFT JOIN partner_playlists pp ON cup.partner_playlist_serial = pp.serial
-LEFT JOIN partner_group_members pgm ON cu.user_serial = pgm.user_serial AND cu.partner_group_serial = pgm.partner_group_serial
+LEFT JOIN partner_group_members pgm ON cu.user_serial = pgm.user_serial 
 WHERE pgm.status is NULL 
 GROUP BY
   u.serial,
