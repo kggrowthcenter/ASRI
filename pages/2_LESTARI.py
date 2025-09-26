@@ -23,8 +23,6 @@ df_lestari['duration_jam'] = df_lestari['duration'] / 3600
 st.title("🌱 Lestari Academy Dashboard")
 st.write("📚 Dashboard ini menampilkan data aktivitas user selama pembelajaran.")
 
-st.write("Enroll unique dates:", df_lestari['enroll_date'].dt.date.unique())
-st.write("Max date in df:", df_lestari['enroll_date'].max())
 
 min_date = df_lestari['enroll_date'].min().date()
 max_date = df_lestari['enroll_date'].max().date()
@@ -191,8 +189,6 @@ if all(col in filtered_df.columns for col in ['duration', 'progress', 'email']):
 
 else:
     st.error("Data tidak memiliki kolom 'duration', 'progress', atau 'email'. Harap periksa sumber data.")
-
-
 
 
 
