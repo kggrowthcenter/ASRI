@@ -23,7 +23,7 @@ LEFT JOIN courses c ON cu.course_serial = c.serial
 LEFT JOIN partner_groups pg ON cu.partner_group_serial = pg.serial
 LEFT JOIN course_user_progress cup ON cup.course_serial = cu.course_serial AND cup.user_serial = u.serial
 LEFT JOIN course_sections cs ON cup.course_section_serial = cs.serial
-LEFT JOIN course_contents cc ON cc.course_serial = c.serial
+LEFT JOIN course_contents cc ON cc.course_serial = cup.course_content_serial
 LEFT JOIN course_user_quiz_answers cuqa ON cuqa.course_content_serial = cup.course_content_serial AND cuqa.user_serial = cup.user_serial
 LEFT JOIN categories c2 ON c2.serial = c.category_serial 
 LEFT JOIN partner_playlists pp ON cup.partner_playlist_serial = pp.serial
@@ -67,7 +67,7 @@ LEFT JOIN courses c ON cu.course_serial = c.serial
 LEFT JOIN partner_groups pg ON cu.partner_group_serial = pg.serial
 LEFT JOIN course_user_progress cup ON cup.course_serial = cu.course_serial AND cup.user_serial = u.serial
 LEFT JOIN course_sections cs ON cup.course_section_serial = cs.serial
-LEFT JOIN course_contents cc ON cc.course_serial = c.serial
+LEFT JOIN course_contents cc ON cc.course_serial = cup.course_content_serial
 LEFT JOIN course_user_quiz_answers cuqa ON cuqa.course_content_serial = cup.course_content_serial AND cuqa.user_serial = cup.user_serial
 LEFT JOIN categories c2 ON c2.serial = c.category_serial 
 LEFT JOIN partner_playlists pp ON cup.partner_playlist_serial = pp.serial
