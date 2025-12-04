@@ -15,4 +15,5 @@ pymysql
 XlsxWriter
 sshtunnel
 paramiko<3.0
+cryptography<=41.0.6
 datetime
