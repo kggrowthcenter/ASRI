@@ -18,7 +18,12 @@ def finalize_data_lestari():
     df_lestari['last_update'] = pd.to_datetime(df_lestari['last_update'], utc=True).dt.tz_convert('Asia/Jakarta').dt.tz_localize(None)
     df_lestari['last_login'] = pd.to_datetime(df_lestari['last_login'], utc=True).dt.tz_convert('Asia/Jakarta').dt.tz_localize(None)
     df_lestari['first_enroll'] = df_lestari.groupby('serial')['enroll_date'].transform('min')
-    df_lestari = df_lestari[df_lestari['title'] != '99 Test Dummy Course']
+    df_lestari = df_lestari[
+        ~df_lestari['title'].isin([
+            '99 Test Dummy Course',
+            'MEMBUAT STORYTELLING SESUAI KAIDAH JURNALISTIK UNTUK KONTEN KREATOR'
+        ])
+    ]
     df_lestari = (
         df_lestari.sort_values('enroll_date', ascending=False)
         .drop_duplicates(subset=['serial', 'title'], keep='first')
